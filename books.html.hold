@@ -1,0 +1,629 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    	
+       
+<title>Books and CD&#39;s&hellip;</title>
+
+<link rel="shortcut icon" type="image/ico" href="images/favicon.ico" />
+
+<meta name="robots" content="index, follow">
+<meta name="Keywords" content="Glen Park, The Art of Changing, Touching the Soul, Psychophysical Integration, Alexander Technique, books, courses, CDs, workshops " />
+<meta name="Description" content="Glen Park is a highly esteemed Alexander Technique and Psychophysical Integration practitioner and tutor based in South Devon, UK. Glen Park provides workshops and courses and is the author of The Art of Changing and Touching the Soul" />
+<meta name="Designer" content="Ian Forster,Graphic Alchemy" />
+<meta name="Author" content="Glen Park" />
+<meta name="Copyright" content="Glen Park 2011" />
+        
+        
+<!-- main css files begin -->
+<link rel="stylesheet" href="css/glenpark.css" media="screen" />
+<link rel="stylesheet" href="css/style-lime.css" media="screen" />
+<!-- main css files end -->
+        
+        
+<!-- js calls begin -->
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/jquery.color.js"></script>
+<script type="text/javascript" src="js/scripts.js"></script>
+<!-- js calls end -->
+        
+        
+        
+<!-- menu and sliderscripts begin -->
+<script type="text/javascript">
+jQuery(document).ready(function() {
+menuHovers();
+headerSlider();
+});
+</script>
+<!-- menu and sliderscripts end -->
+
+<!-- popup modal css begins -->
+<link rel="stylesheet" type="text/css" href="js/lightbox/themes/default/jquery.lightbox.css" />
+<!--[if IE 6]><link rel="stylesheet" type="text/css" href="js/lightbox/themes/default/jquery.lightbox.ie6.css" /><![endif]-->
+<!-- popup modal css ends -->
+
+
+<!-- popup modal script begins -->
+  <script type="text/javascript" src="js/lightbox/jquery.lightbox.js"></script>
+  <script type="text/javascript">
+    jQuery(document).ready(function(){
+      jQuery('.lightbox').lightbox();
+    });
+  </script>
+<!-- popup modal script ends -->
+
+
+
+
+
+<!-- tooltip script call begins -->
+<script src="js/tooltip.js" type="text/javascript"></script>
+<!-- tooltip script call ends -->
+
+
+
+
+
+<!-- toplink script begins -->
+<script type="text/javascript">
+$(document).ready(function(){
+	$(".scroll").click(function(event){
+		//prevent the default action for the click event
+		event.preventDefault();
+
+		//get the full url - like mysitecom/index.htm#home
+		var full_url = this.href;
+
+		//split the url by # and get the anchor target name - home in mysitecom/index.htm#home
+		var parts = full_url.split("#");
+		var trgt = parts[1];
+
+		//get the top offset of the target anchor
+		var target_offset = $("#"+trgt).offset();
+		var target_top = target_offset.top;
+
+		//goto that anchor by setting the body scroll top to anchor top
+		$('html, body').animate({scrollTop:target_top}, 500);
+	});
+});
+</script>
+<!-- toplink script begins -->	
+
+
+
+
+
+
+<!--[if lt IE 7]>
+<script type="text/javascript" src="js/unitpngfix.js"></script>
+<![endif]-->
+
+
+
+
+
+
+<!-- google analytics code begins -->
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-22971181-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+<!-- google analytics code ends -->
+        
+
+
+
+</head>
+    
+ 
+<body>
+
+<!-- toplink begins -->
+<a name="top" id="top"></a>
+<!-- toplink ends -->
+
+
+<!-- header-border begins -->        
+<div id="header-border"></div>
+<!-- header-border ends -->
+
+
+<!-- header begins -->    
+<div id="header">
+
+
+<!-- header-slide-bg begins -->
+<div id="header-slider-bg" style=""><img src="images/" alt="" /></div>
+<!-- header-slide-bg ends -->
+
+
+<!-- header .wrapper begins -->        
+<div class="wrapper">
+
+
+
+<!-- logo container begins -->   
+<div id="logolime"><a href="index.html"><img src="images/chakraslogolime.png" alt="" /></a></div>  
+<!-- logo container ends -->
+
+
+                
+
+<!-- header-slider-content begins -->
+<div id="header-slider-content">
+<ul>
+
+<li>
+<div class="header-bg">000000,images/bg4.jpg</div>
+<h2>&ldquo;If nothing ever changed there&#39;d be no butterflies&rdquo;</h2>
+<p class="quotecreditblack">&#126; Glen Beaman</p>
+</li>
+
+                    
+<li>
+<div class="header-bg">000000,images/bg12.jpg</div>
+<h2>&ldquo;Change always comes bearing gifts&rdquo;</h2>
+<p class="quotecreditblack">&#126; Price Pritchett </p>
+</li>
+
+                    
+<li>
+<div class="header-bg">000000,images/bg13.jpg</div>
+<h2>&ldquo;You translate everything–whether physical, mental
+or spiritual into muscular tension&rdquo;</h2>
+<p class="quotecreditwhite">&#126; FM Alexander </p>
+</li>
+                    
+</ul>
+</div>
+<!-- header-slider-content ends -->
+                
+
+
+
+
+
+<!-- menu begins -->
+<ul id="menu">
+
+<li><a href="index.html">Welcome</a></li>
+
+
+<li><a href="work.html">Individual<br />&amp; Group Work</a>
+<ul>
+<li><a href="work.html#sessions">Individual Sessions</a></li>
+<li><a href="work.html#workshops">Workshops &amp; Courses</a></li>
+</ul>
+</li>
+                
+
+<li class="current"><a href="books.html">Books &amp; CD&#39;s</a>
+<ul>
+<li><a href="books.html#theartofchanging">The Art of Changing</a></li>
+<li><a href="books.html#theartofchangingcd">The Art of Changing CD</a></li>
+<li><a href="books.html#peggywilliams">Peggy Williams Pamphlet</a></li>
+<li><a href="books.html#touchingthesoul">Touching The Soul</a></li>
+</ul>
+
+</li>
+                
+
+<li><a href="testimonials.html">Testimonials</a></li>
+                
+
+<li><a href="contact.html">Contact Glen</a></li>
+                
+</ul>
+<!-- menu ends -->
+
+
+
+
+
+
+
+
+
+</div>
+<!-- header .wrapper ends -->
+
+
+        
+</div>
+<!-- header ends -->
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- submenustrip begins -->
+<div id="submenustrip">
+
+<div id="smalliconscontainer">
+<a href="mailto:glenpark@glenpark.org.uk" class="tooltip" title="Send a direct email to Glen"><div class="emailicon"></div></a>
+
+<a href="popups/aboutalexander.html" target="_blank" class="tooltip" title="About Alexander Technique"><div class="infoicon"></div></a>
+<a href="index.html" class="tooltip" title="Back to Homepage" target="_self"><div class="homeicon"></div></a>
+<a href="http://www.facebook.com/profile.php?id=100000862192767" class="tooltip" title="Visit Glen on Facebook" target="_blank"><div class="facebookicon"></div></a>
+</div>
+
+<p class="submenutextitalic">&hellip; bringing together the Alexander Technique and Chakra Therapy</p>
+
+</div>
+<!-- submenustrip ends -->
+
+
+
+
+
+
+
+
+
+
+<!-- content begins -->
+<div id="content">
+
+
+<!-- content .wrapper begins -->
+<div class="wrapper">
+        
+        
+        
+        
+            
+
+
+
+                
+<!-- .content-block 1 begins -->
+<div class="content-block">
+
+
+<p class="runinheading">Books &amp; CD&#39;s&hellip;</p>
+
+
+
+
+
+<a name="theartofchanging" id="theartofchanging"></a>
+
+
+<p>&nbsp;</p>
+<div class="clear"></div>
+
+
+
+<img src="images/aocbookmodel.png" alt="The Art of Changing by Glen Park" width="332" height="461" border="0" align="right" />
+<p><span class="boldsubtitle">The Art of Changing</span> <span class="italicsubtitle">by Glen Park</span></p>
+<h6>Ashgrove Publishing 1989&frasl;2000 &nbsp; &nbsp; ISBN 1-85398-130-3</h6>
+<p><span class="pitalic">The Art of Changing</span> has established a fine reputation twice over as one of the very best introductions to the <a href="popups/aboutalexander.html?lightbox[iframe]=true&amp;lightbox[width]=600&amp;lightbox[height]=580" class="lightbox">Alexander Technique</a> and as a unique exploration into applying the principles of the Alexander Technique to psychological and energetic patterns of behaviour.</p>
+
+<div class="blockquotelime">An admirable and important book, the implications<br />are profound <span class="quotecreditinline"> &#126; Sir George Trevelyan</span></div>
+
+<p>Part One of the book is an excellent introduction to the Alexander Technique. The basic principles are explained clearly with the help of pictures, line drawings and observational exercises.</p>
+<p>Part Two of <span class="pitalic">The Art of Changing</span> Glen Park looks at how the Alexander principles can be applied to our psychological habits, our patterns of thoughts and feelings. It then goes on to look at the body as an energy system, working with the Hindu philosophy of the <a href="popups/aboutchakras.html?lightbox[iframe]=true&amp;lightbox[width]=600&amp;lightbox[height]=460" class="lightbox">Chakras</a> which explores the relationship between mind and body in some depth. Combining this wisdom with the Alexander principles can help us gain new insights into our psychological make-up with the potential to identify and transform unwanted patterns.</p>
+<!--<p><strong>Price: £12.99</strong> (Postage & Packaging: £2.80)</p>
+<p><em>No additional P&P when purchasing extra copies</em></p>-->
+<a href="http://www.amazon.co.uk/Art-Changing-Exploring-Alexander-Relationship/dp/1853981303/ref=sr_1_12?s=books&ie=UTF8&qid=1302001289&sr=1-12" target="_blank" class="tooltip" title="Buy The Art of Changing<br />online from Amazon.co.uk"><div class="buybookbtn"></div></a>
+<!--<div class="paypalbtn">
+<h4 style="float:left"><strong>Buy <em>The Art of Changing</em> on Paypal</strong></h4>
+<div style="float:left;padding:10px 0 0 20px;">
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+<input type="hidden" name="cmd" value="_s-xclick">
+<input type="hidden" name="hosted_button_id" value="JGBGRAA3RVQAA">
+<input type="image" src="https://www.paypalobjects.com/en_GB/i/btn/btn_buynow_LG.gif" border="0" name="submit" alt="PayPal – The safer, easier way to pay online.">
+<img alt="" border="0" src="https://www.paypalobjects.com/en_GB/i/scr/pixel.gif" width="1" height="1">
+</form>
+</div>
+</div>-->
+
+</div>
+<!-- .content-block 1 ends -->
+
+
+
+<a name="theartofchangingcd" id="theartofchangingcd"></a>
+
+
+<div class="clear"></div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+
+
+
+
+
+
+
+
+<!-- .content-block 2 begins -->
+<div class="content-block">
+
+<p><span class="boldsubtitle">The Art of Changing CD</span> &hellip; Four guided visualizations <span class="italicsubtitle"> by Glen Park</span><br /></p>
+
+<h6>Ashgrove Publishing  &nbsp; &nbsp; ISBN 1-85398-130-3 &nbsp; &nbsp; CD Published 2005</h6>
+
+<img src="images/aoccdmodel.jpg" alt="The Art of Changing audio CD by Glen Park" style="padding-bottom:100px;" width="489" height="353" border="0" align="left" />
+
+<p>This CD complements Glen Park's book of the same name and contains audio tracks designed to be listened to while lying in semi-supine position. It has a four page insert illustrating the semi-supine position.</p>
+
+<p> The CD has a short introduction followed by four twenty minute guided visualisations.</p>
+
+<ul>
+<li><span class="bulletlime">&bull;</span> Introduction</li>
+<li><span class="bulletlime">&bull;</span> Refining Self Awareness &#40;body scan&#41;</li> 
+<li><span class="bulletlime">&bull;</span> Giving Alexander Directions</li>
+<li><span class="bulletlime">&bull;</span> Working with Light Energy &#40;visualising energy flows to bring about the Alexander directions&#41;.</li>
+<li><span class="bulletlime">&bull;</span> Energising the Chakras &#40;working with light energy and the chakras&#41;.</li>
+</ul>
+
+<p>The CD is professionally recorded and narrated by Glen Park.</p>
+<!--
+<a href="http://www.amazon.co.uk/Art-Changing-Exploring-Alexander-Relationship/dp/1853981486/ref=sr_1_3?s=books&ie=UTF8&qid=1302001204&sr=1-3" target="_blank" class="tooltip" title="Buy The Art of Changing audio CD<br />online from Amazon.co.uk"><div class="buycdbtn"></div></a>
+-->
+
+<br />
+<p><strong>Price: £10.00</strong> (Postage & Packaging: £2.80)</p>
+<p><em>No additional P&P when purchasing extra copies</em></p>
+<div class="paypalbtn">
+<h4 style="float:left"><strong>Buy <em>The Art of Changing CD</em></strong></h4>
+<div style="float:left;padding:10px 0 0 20px;">
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+<input type="hidden" name="cmd" value="_s-xclick">
+<input type="hidden" name="hosted_button_id" value="PNSD42SEPBLU2">
+<input type="image" src="https://www.paypalobjects.com/en_GB/i/btn/btn_buynow_LG.gif" border="0" name="submit" alt="PayPal – The safer, easier way to pay online.">
+<img alt="" border="0" src="https://www.paypalobjects.com/en_GB/i/scr/pixel.gif" width="1" height="1">
+</form>
+</div>
+<br /><br /><br />
+<p>If you are an Alexander Teacher and would like to buy 6+ copies for your pupils please <a href="mailto:glenpark@glenpark.org.uk" target="_blank" alt="Contact Glen Park">contact Glen Park</a> for a discount.</p>
+
+</div>
+<!-- .content-block 2 ends -->
+
+
+
+<a name="peggywilliams" id="peggywilliams"></a>
+
+
+<div class="clear"></div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+
+
+
+
+
+
+<!-- .content-block 3 begins -->
+<div class="content-block">
+
+<p><span class="boldsubtitle">An Interview with Peggy Williams (1916 – 2003)</span> <span class="italicsubtitle">compiled by Glen Park</span></p>
+
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+<img src="images/peggy-williams-mockup.jpg" alt="An Interview with Peggy Williams" width="489" height="313" border="0" align="left" style="margin-bottom:20px;" />
+
+<p>Peggy Williams began her training with FM Alexander in September 1946. She taught the Alexander Technique for over fifty years and the excellence of her work was recognised throughout the world.</p>
+
+<p>This interview is compiled from discussions which took place during a series of lessons Glen Park had with Peggy during her training in November 1981, in which she tape-recorded their conversation. Peggy  talks about her training and her early challenges as an Alexander teacher.</p>
+
+<p>There are only a few dozen left of these interviews which can now be bought through this website. The pamphlets are over thirty years old (almost antiques!) so there may be a little rust around the staples.</p>
+
+<div style="display:inline-block;overflow:auto;width:461px;"><div class="blockquotelime">'An Interview with Peggy Williams' by Glen Park, is very helpful reading for all teacher-trainees<span style="text-align:right;float:right;" class="quotecreditinline"> &#126; John S Hunter,<br />Chairman 1990<br />Society of Teachers of the Alexander Technique</span></div>
+
+<br />
+<p><strong>Price: £2.50</strong> (Postage & Packaging: £2.50)</p>
+<p><em>No additional P&P when purchasing extra copies</em></p>
+<div class="paypalbtn">
+<h4 style="float:left"><strong>Buy <em>An Interview with Peggy Williams</em></strong></h4>
+<div style="float:left;padding:10px 0 0 20px;">
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+<input type="hidden" name="cmd" value="_s-xclick">
+<input type="hidden" name="hosted_button_id" value="BL3GT5QQKLFX4">
+<input type="image" src="https://www.paypalobjects.com/en_GB/i/btn/btn_buynow_LG.gif" border="0" name="submit" alt="PayPal – The safer, easier way to pay online.">
+<img alt="" border="0" src="https://www.paypalobjects.com/en_GB/i/scr/pixel.gif" width="1" height="1">
+</form>
+</div>
+
+</div>
+</div>
+<!-- .content-block 3 ends -->
+
+
+<div class="clear"></div>
+
+
+
+<a name="touchingthesoul" id="touchingthesoul"></a>
+
+<div class="clear"></div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+
+
+
+
+
+<!-- .content-block 4 begins -->
+<div class="content-block">
+
+<p><span class="boldsubtitle">Touching the Soul</span><span class="italicsubtitle"> by Glen Park</span><br /></p>
+<p>&#40;Coming soon&#41;</p>
+<img src="images/ttsspacer.png" width="400" height="400" border="0" align="right" />
+
+<p>Life has evolved through touch. Embryologically, it is the first sense to come into being. Our sensitivity to touch is profound. It can stimulate our earliest, largely unconscious memories and our primitive responses. Touch reaches deep into our psyches. When the touch is sufficiently sensitive and aware it can induce deep relaxation, altered states, heightened awareness and a powerful connection to our experience of spirit or soul.</p>
+
+<p>In this book Glen explains how the chakras can be understood as a developmental map of the psyche, covering stages of development including infancy, childhood, adulthood and maturity. She looks in depth at these developmental stages and how they are paralleled in the findings of western developmental psychology and neuroscience. Using this understanding of the multi-layered psyche as expressed through the chakras, she offers practical exercises which can help to bring awareness to each of our individual ‘small minds’ so that they can be integrated and in harmony with each other.</p>
+
+<p>She then explains her system of Chakra Therapy which combines the practical exercises used in the book with the deep healing hands-on work offered by practitioners of the Alexander Technique who have also completed an additional training in Chakra Therapy. Bringing healing touch together with increased self-awareness of the rich multi-faceted nature of who we are creates a potent combination which can facilitate deep change. By creating a synthesis between Eastern traditions and Western research we gain a richer understanding of ourselves both mentally and physically and by working with conscious healing touch there is the potential for deep soul growth and transformation.</p>
+
+<p>Touching The Soul is not yet available. If you would like to be notified of its publication please click the button below to email Glen Park:</p>
+
+<a href="mailto:glenpark@glenpark.org.uk" target="_blank" class="tooltip" title="Click here to request email notification<br />of the publication of Touching The Soul"><div class="notificationbtn"></div></a>
+
+</div>
+<!-- .content-block 4 ends -->
+
+
+
+
+
+<div class="clear"></div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+
+
+
+
+
+</div>
+ <!-- content .wrapper ends -->
+        
+
+</div>
+<!-- content ends -->
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+   
+   
+   
+   
+   
+        
+        
+        
+        
+        
+        
+<!-- footer container begins -->        
+<div id="footer">
+        
+<!-- footer .wrapper begins -->
+<div class="wrapper">
+
+<!-- footer .left container begins -->            
+<div class="left">
+<!-- AddThis Buttons BEGIN -->
+<div id="socialmediacontainer">
+<div class="addthis_toolbox addthis_default_style addthis_32x32_style">
+<a class="addthis_button_preferred_1"></a>
+<a class="addthis_button_preferred_2"></a>
+<a class="addthis_button_preferred_8"></a>
+<a class="addthis_button_preferred_4"></a>
+<a class="addthis_button_preferred_11"></a>
+<a class="addthis_button_preferred_3"></a>
+</div>
+<script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid=xa-4d96bc857bb00cc8"></script>
+<p class="pwhiteitalic">Share this website&hellip;</p>
+
+</div>
+<!-- AddThis Buttons END -->
+
+
+
+</div>
+<!-- footer .left container ends -->
+                
+                
+              
+<!-- footer .right container begins -->
+<div class="right">
+<p class="footertext"><a href="index.html">Welcome</a> &#124; <a href="work.html">Individual &amp; Group Work</a> &#124; <a href="books.html">Books &amp; CD&#39;s</a> &#124; <a href="testimonials.html">Testimonials</a> &#124; <a href="contact.html">Contact Glen</a></p>
+<p class="footertext">© Copyright 2011 Glen Park &#126; &lsquo;The Art of Changing&rsquo; </p>
+</div>
+<!-- footer .right container ends -->
+
+</div>
+<!-- footer .wrapper ends -->
+
+        
+</div>
+<!-- footer container ends -->
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+      
+      
+         
+         
+         
+         
+            
+
+<!-- footer2 container begins -->
+<div id="footer2">
+
+<!-- footer2 .wrapper begins -->
+<div class="wrapper">
+
+<div id="toplinkcontainer"><a href="#top" class="scroll"><img src="images/topicon.png" alt="" /></a></div>
+<div class="atilogocontainer"><a href="http://www.ati-net.com" class="tooltip" target="_blank" title="Website of Alexander<br />Technique International" ><img src="images/atilogo.png" alt="Alexander Technique International" /></a></div>
+<div class="gaswooshcontainer"><a href="http://www.graphicalchemy.co.uk" target="_blank"><img src="images/gaswooshicon.png" width="50" height="30" alt="Graphic Alchemy" /></a></div>
+<p class="footercredittext">Creative website and blog design by <a href="http://www.graphicalchemy.co.uk" class="tooltip" title="Graphic Alchemy website" target="_blank">Graphic Alchemy</a></p></div>
+<!-- footer2 .wrapper ends -->
+
+</div>
+<!-- footer2 container ends -->
+
+
+
+
+
+
+</body>
+</html>
