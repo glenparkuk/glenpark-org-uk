@@ -7,6 +7,14 @@
 	},
 	"buffers":
 	[
+		{
+			"file": "books.html",
+			"settings":
+			{
+				"buffer_size": 23631,
+				"line_ending": "Unix"
+			}
+		}
 	],
 	"build_system": "",
 	"build_system_choices":
@@ -78,8 +86,39 @@
 	"groups":
 	[
 		{
+			"selected": 0,
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"file": "books.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 23631,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								18156,
+								18156
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 7702.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				}
 			]
 		}
 	],
