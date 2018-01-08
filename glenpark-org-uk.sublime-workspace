@@ -11,7 +11,15 @@
 			"file": "books.html",
 			"settings":
 			{
-				"buffer_size": 23631,
+				"buffer_size": 23334,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "glenpark-org-uk.sublime-project",
+			"settings":
+			{
+				"buffer_size": 45,
 				"line_ending": "Unix"
 			}
 		}
@@ -55,7 +63,7 @@
 	],
 	"find":
 	{
-		"height": 23.0
+		"height": 35.0
 	},
 	"find_in_files":
 	{
@@ -86,7 +94,7 @@
 	"groups":
 	[
 		{
-			"selected": 0,
+			"selected": 1,
 			"sheets":
 			[
 				{
@@ -95,15 +103,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 23631,
+						"buffer_size": 23334,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								18156,
-								18156
+								17108,
+								17108
 							]
 						],
 						"settings":
@@ -113,7 +121,35 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 7702.0,
+						"translation.y": 7410.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "glenpark-org-uk.sublime-project",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 45,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JSON.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
