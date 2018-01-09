@@ -488,30 +488,50 @@ or spiritual into muscular tension&rdquo;</h2>
     <table >
       <thead>
         <tr>
-          <th class="item">Item</th>
-          <th>Price</th>
-          <th class="quantity">Quantity</th>
+          <th class="first-table-header">Item</th>
+          <th class="price-column">Price</th >
+          <th class="quantity-column">Quantity</th>
+          <th class="totals-column last-table-header">Total</th>
         </tr>
       </thead>
       <tbody>
         <tr>
           <td>The Art of Changing paperback</td>
-          <td>£12.50</td>
-          <td><input type="number" min="0" value="0" placeholder="0" max="10" name="quantity-aoc-paperback" required /></td>
+          <td class="price-column">£12.50</td>
+          <td class="quantity-column"><input type="number" min="0" value="0" placeholder="0" max="10" name="quantity-aoc-paperback" required /></td>
         </tr>
         <tr>
           <td>The Art of Changing - Audio CD</td>
-          <td>£10.00</td>
-          <td><input type="number" min="0" value="0" placeholder="0" max="10" name="quantity-aoc-paperback" required /></td>
+          <td class="price-column">£10.00</td>
+          <td class="quantity-column"><input type="number" min="0" value="0" placeholder="0" max="10" name="quantity-aoc-paperback" required /></td>
         </tr>
         <tr>
           <td>Peggy Williams Pamphlet</td>
-          <td>£2.50</td>
-          <td><input type="number" min="0" value="0" placeholder="0" max="10" name="quantity-aoc-paperback" required /></td>
+          <td class="price-column">£2.50</td>
+          <td class="quantity-column"><input type="number" min="0" value="0" placeholder="0" max="10" name="quantity-aoc-paperback" required /></td>
         </tr>
+        <tr>
+          <td colspan="2" class="price-column">Subtotal</td>
+          <td>
+          <td colspan="1" class="totals-column">£XXX</td>
+        </tr>
+        <tr>
+          <td colspan="2" class="price-column">Postage &amp; Packaging</td>
+          <td></td>
+          <td colspan="1" class="totals-column">£2.50</td>
+      </tr>
+      <tr>
+        <td colspan="2" class="price-column">Total</td>
+        <td></td>
+        <td colspan="1" class="totals-column">£XXX</td>
+      </tr>
     </tbody>
   </table>
 </fieldset>
+
+<div class="totals">
+  
+
 <fieldset class="shipping">
   <p>Please select your country</p>
   <ul>
@@ -522,21 +542,7 @@ or spiritual into muscular tension&rdquo;</h2>
       <li><input type="radio" name="">Rest of World</option></li>
   </ul>
 </fieldset>
-<div class="totals">
-  <table>
-    <tr>
-      <td colspan="2">Subtotal</td>
-      <td>£XXX</td>
-    </tr>
-    <tr>
-      <td colspan="2">Postage &amp; Packaging</td>
-      <td>£2.50</td>
-    </tr>
-    <tr>
-      <td colspan="2">Total</td>
-      <td>£XXX</td>
-    </tr>
-  </table>
+
 </div>
   <input class="submit-btn" type="submit"></input>
 </form>

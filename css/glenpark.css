@@ -842,13 +842,13 @@ div.checkout table th {
 	padding: 5px;
 }
 
-div.checkout table th.item {
+div.checkout table th.first-table-header {
 	background-color: #999999;
 	border-top-left-radius: 5px;
 	border-bottom-left-radius: 5px;
 }
 
-div.checkout table th.quantity {
+div.checkout table th.last-table-header {
 	background-color: #999999;
 	border-top-right-radius: 5px;
 	border-bottom-right-radius: 5px;
@@ -863,9 +863,15 @@ div.checkout table td {
 	padding: 5px;
 }
 
-div.checkout fieldset.shipping {
-	width: 50%;
-	display: inline-block;
+div.checkout table tr .price-column {
+	text-align: right;
+}
+div.checkout table tr .quantity-column {
+	text-align: center;
+}
+
+div.checkout table tr .totals-column {
+	text-align: center;
 }
 
 div.checkout div.totals {
