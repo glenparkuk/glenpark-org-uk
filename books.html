@@ -477,34 +477,53 @@ or spiritual into muscular tension&rdquo;</h2>
 
 <p><span class="boldsubtitle">Buy Now</span></p>
 
-<div style="float:left;">
-<p>Buy multiple items and save on postage.</p>
-</div>
+  <!-- <div style="float:left;">
+  <p>Buy multiple items and save on postage.</p>
+  </div> -->
 
-<div style="float:left;padding:10px 0 0 40px;">
+<div style="float:left;padding:10px 0 0 40px; width: 100%;" class="checkout">
 
 <form action="#">
+  <fieldset class="items">
+    <table >
+      <thead>
+        <tr>
+          <th class="item">Item</th>
+          <th>Price</th>
+          <th class="quantity">Quantity</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>The Art of Changing paperback</td>
+          <td>£12.50</td>
+          <td><input type="number" min="0" value="0" placeholder="0" max="10" name="quantity-aoc-paperback" required /></td>
+        </tr>
+        <tr>
+          <td>The Art of Changing - Audio CD</td>
+          <td>£10.00</td>
+          <td><input type="number" min="0" value="0" placeholder="0" max="10" name="quantity-aoc-paperback" required /></td>
+        </tr>
+        <tr>
+          <td>Peggy Williams Pamphlet</td>
+          <td>£2.50</td>
+          <td><input type="number" min="0" value="0" placeholder="0" max="10" name="quantity-aoc-paperback" required /></td>
+        </tr>
+    </tbody>
+  </table>
+</fieldset>
+<fieldset class="shipping">
+  <p>Please select your country</p>
+  <ul>
+      <!-- <input type="radio" name="" value="Please select your country"></option> -->
+      <li><input type="radio" id="" name="">United Kingdom</option></li>
+      <li><input type="radio" name="">Europe</option></li>
+      <li><input type="radio" name="">America, South America, Canada and Asia</option></li>
+      <li><input type="radio" name="">Rest of World</option></li>
+  </ul>
+</fieldset>
+<div class="totals">
   <table>
-    <tr>
-      <th>Item</th>
-      <th>Price</th>
-      <th>Quantity</th>
-    </tr>
-    <tr>
-      <td>The Art of Changing paperback</td>
-      <td>£12.50</td>
-      <td><input type="number" min="0" value="0" placeholder="0" max="10" name="quantity-aoc-paperback" required /></td>
-    </tr>
-    <tr>
-      <td>The Art of Changing - Audio CD</td>
-      <td>£10.00</td>
-      <td><input type="number" min="0" value="0" placeholder="0" max="10" name="quantity-aoc-paperback" required /></td>
-    </tr>
-    <tr>
-      <td>Peggy Williams Pamphlet</td>
-      <td>£2.50</td>
-      <td><input type="number" min="0" value="0" placeholder="0" max="10" name="quantity-aoc-paperback" required /></td>
-    </tr>
     <tr>
       <td colspan="2">Subtotal</td>
       <td>£XXX</td>
@@ -518,17 +537,8 @@ or spiritual into muscular tension&rdquo;</h2>
       <td>£XXX</td>
     </tr>
   </table>
-<div>
-  <select>
-  <label>Country</label>
-    <option type="" name="" value="Please select your country"></option>
-    <option type="" name="">United Kingdom</option>
-    <option type="" name="">Europe</option>
-    <option type="" name="">America, South America, Canada and Asia</option>
-    <option type="" name="">Rest of World</option>
-  </select>
 </div>
-  <input type="submit"></input>
+  <input class="submit-btn" type="submit"></input>
 </form>
 
 <!-- <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
@@ -549,11 +559,11 @@ or spiritual into muscular tension&rdquo;</h2>
 
 </div>
 
-<div style="float:left;padding:10px 0 0 40px;">
+<!-- <div style="float:left;padding:10px 0 0 40px;">
 
 Select Country
 
-</div>
+</div> -->
 
 <div class="clear"></div>
 <br /><br />
