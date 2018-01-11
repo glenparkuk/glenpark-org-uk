@@ -893,12 +893,12 @@ div.checkout input.submit-btn {
 
 div.checkout td.shipping ul {
 	padding-left: 0;
-	border: 0.5px #999999 solid;
+	border: 0.5px #d3d3d3 solid;
 	margin: 0;
 }
 
 div.checkout td.shipping ul li{
-	border-bottom: 0.5px #999999 solid;
+	border-bottom: 0.5px #b3b3b3b3 solid;
 	padding: 6px;
 }
 
