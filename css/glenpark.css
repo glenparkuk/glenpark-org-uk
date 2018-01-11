@@ -830,10 +830,12 @@ div.checkout fieldset {
 div.checkout table {
 	width: 100%;
 	border-spacing: 0;
+	font-size: 13px;
 }
 
 div.checkout table thead {
 	color: #ffffff;
+	font-size: 16px;
 }
 
 div.checkout table th {
@@ -881,6 +883,27 @@ div.checkout div.totals {
 }
 	
 div.checkout input.submit-btn {
-	display:block;
+	background: #4da6ff;
+    color: white;
+    border-radius: 5px;
+    padding: 5px 10px;
+    font-size: 13px;
+    cursor: pointer;
 }
+
+div.checkout td.shipping ul {
+	padding-left: 0;
+	border: 0.5px #999999 solid;
+	margin: 0;
+}
+
+div.checkout td.shipping ul li{
+	border-bottom: 0.5px #999999 solid;
+	padding: 6px;
+}
+
+
+
+
+
 	
