@@ -1,53 +1,72 @@
 interface Item {
-	itemId: string
-	price: number
+	id: string,
+	price: number,
+	quantity: number,
+	total: number
 }
 
-function Cart(Item[]: items) {
+function Cart(items: Array<Item>): void {
+
+	this.items = {};
+
 	this.init = function() {
-		for(let i = 0; i < items.length-1; i++) {
-			this['price' + items[i].itemId] = items[i].price
+		if(items.length < 1) {
+			return false;
 		}
+
+		for(let i = 0; i < items.length; i++) {
+			this.items[items[i].id] = items[i];
+			this.addQuantityEventListener(items[i].id);
+		}
+
+		this.updateCart();
 	}
 
-	// this.priceAOCPaperback: 12.5,
-	// this.priceAOCCD: 10,
-	// this.pricePWPamphlet: 2.5,
-
-	this.quantityAOCPaperback: number,
-	this.quantityAOCCD: number,
-	this.quantityPWPamphlet: number,
-	
-	this.totalAOCPaperback: number,
-	this.totalAOCCD: number,
-	this.totalPWPamphlet: number,
-
-	this.getItemQuantity = function(string: itemId) {
-		q = document.getElementById(itemId).value;
+	this.getItemQuantity = function(itemId: string) {
+		let q = (<HTMLInputElement>document.getElementById('quantity' + itemId)).value;
 		return q;
 	}
 	
-	this.getItemTotal = function(number: itemPrice, number: itemQuantity) {
-		return itemPrice * itemQuantity;
+	this.getItemTotal = function(price: number, quantity: number) {
+		return price * quantity;
 	}
 	
 	this.updateCart = function() {
-		
+		let subtotal = 0;
+		let subtotalElement = document.getElementById('totalSubTotal');
+		for(let i = 0; i < this.items.length-1; i++) {
+			this.updateItemTotalElement(this.items[i].id);
+			subtotal += this.items[i].total;
+		}
+		subtotalElement.innerHTML = '£' + subtotal;
 	}
 
-	this.addQuantityEventListener = function(string: itemId) {
-		el = document.getElementById(itemId)
-		el.addEventListener('change', function(string: itemId) {
-			this['quantity' + itemId] = this.getItemQuantity(itemId);
-			this['total' + itemId] = getItemTotal(this['price' + itemId], this['quantity' + itemId]);
-			this.updateCart();
-		});
+	this.updateItemTotalElement = function(itemId: string) {
+		let el = document.getElementById('total' + itemId);
+		el.innerHTML = '£' + this.items[itemId].total;
+	}
+
+	this.addQuantityEventListener = function(itemId: string) {
+		let el = document.getElementById('quantity' + itemId);
+		el.addEventListener('input', this.onQuantityUpdateEvent ); // TODO: use event object - this.onQuantityUpdate(e)
+	}
+	this.onQuantityUpdateEvent = function(e: any) {
+		let el = e.target;
+		let itemId = el.id.replace('quantity', ''); // TODO: improve this with data targets in HTML
+		cart.onQuantityUpdate(itemId); // TODO: I don't like this - I should be able to use this.onQuantityUpdate(itemId)
+	}
+	this.onQuantityUpdate = function(itemId: string) {
+		console.log("onQuantityUpdate");
+		let item = this.items[itemId];
+		item.quantity = this.getItemQuantity(itemId);
+		item.total = this.getItemTotal(item.price, item.quantity);
+		this.updateCart();
 	}
 }
 
-let AOCPaperback = new Item('AOCPaperback', 12.5);
-let AOCCD = new Item('AOCCD', 10);
-let PWPamphlet = new Item('PWPamphlet', 2.5);
+let AOCPaperback = { id:'AOCPaperback', price: 12.5, quantity: 0, total: 0 };
+let AOCCD = { id: 'AOCAudioCD', price: 10, quantity: 0, total: 0 };
+let PWPamphlet = { id: 'PWPamphlet', price: 2.5, quantity: 0, total: 0 };
 
 let itemArray = [AOCPaperback, AOCCD, PWPamphlet];
 
