@@ -1,8 +1,13 @@
 function Cart(items) {
     this.items = [];
+    this.shippingRegion = null;
     this.shippingTotal = 0;
     this.subtotal = 0;
     this.total = 0;
+    this.updateShippingTotal = function () {
+        // TODO: get Royal Mail shipping cost matrix
+        // TODO: cross reference shipping region with cart items
+    };
     this.updateSubtotal = function () {
         var subtotal = 0;
         for (var i = 0; i < this.items.length; i++) {
@@ -26,8 +31,8 @@ function Cart(items) {
         //this.addShippingEventListener();
         //this.addPayNowBtnEventListener();
         this.updateCartItems();
-        this.updateCartShippingEl();
-        this.updateCartTotalEl();
+        this.updateCartShipping();
+        this.updateCartTotal();
         return true;
     };
     this.Item = function (id, price) {
@@ -52,7 +57,8 @@ function Cart(items) {
             var item = this.getCartItem(itemId);
             item.quantity = quantity;
             this.updateCartItems();
-            this.updateCartTotalEl();
+            this.updateCartShipping();
+            this.updateCartTotal();
         }.bind(this), false);
     };
     // add event listeners to individual product buy now buttons
@@ -64,12 +70,13 @@ function Cart(items) {
         // 	let quantity:number = parseInt(el.value);
         // 	let item = this.getCartItem(itemId);
         // 	item.quantity = quantity;
-        // 	this.updateCartShippingEl();
-        // 	this.updateCartTotalEl();
+        // 	this.updateCartShipping();
+        // 	this.updateCartTotal();
         // }.bind(this), false );
     };
     // add event listener to shipping radio buttons
     this.addShippingEventListener = function () {
+        // get shipping region
         // let el:HTMLElement = document.getElementById('quantity' + itemId);
         // el.addEventListener('input', function(e): void {
         // 	let el = e.target;
@@ -77,9 +84,10 @@ function Cart(items) {
         // 	let quantity:number = parseInt(el.value);
         // 	let item = this.getCartItem(itemId);
         // 	item.quantity = quantity;
-        // 	this.updateCartShippingEl();
-        // 	this.updateCartTotalEl();
+        // 	this.updateCartShipping();
+        // 	this.updateCartTotal();
         // }.bind(this), false );
+        // this.shippingRegion = ;
     };
     // add event listener to pay now / submit button
     this.addPayNowBtnEventListener = function () {
@@ -90,8 +98,8 @@ function Cart(items) {
         // 	let quantity:number = parseInt(el.value);
         // 	let item = this.getCartItem(itemId);
         // 	item.quantity = quantity;
-        // 	this.updateCartShippingEl();
-        // 	this.updateCartTotalEl();
+        // 	this.updateCartShipping();
+        // 	this.updateCartTotal();
         // }.bind(this), false );
     };
     this.updateCartItems = function () {
@@ -108,12 +116,13 @@ function Cart(items) {
         var subtotalEl = document.getElementById('totalSubTotal');
         subtotalEl.innerHTML = '£' + subtotal;
     };
-    this.updateCartShippingEl = function () {
+    this.updateCartShipping = function (shippingRegion) {
+        this.updateShippingTotal();
         var shippingTotal = this.shippingTotal;
         var shippingTotalEl = document.getElementById('totalShippingTotal');
         shippingTotalEl.innerHTML = '£' + shippingTotal;
     };
-    this.updateCartTotalEl = function () {
+    this.updateCartTotal = function () {
         this.updateTotal();
         var total = this.total;
         var totalTotalEl = document.getElementById('totalTotal');
