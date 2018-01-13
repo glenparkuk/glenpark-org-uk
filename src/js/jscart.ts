@@ -12,9 +12,15 @@ interface CartItem {
 function Cart(items: Array<CartItemInput>): void {
 
 	this.items = [];
+	this.shippingRegion = null;
 	this.shippingTotal = 0;
 	this.subtotal = 0;
 	this.total = 0;
+
+	this.updateShippingTotal = function():void {
+		// TODO: get Royal Mail shipping cost matrix
+		// TODO: cross reference shipping region with cart items
+	}
 
 	this.updateSubtotal = function():void {
 		let subtotal:number = 0;
@@ -35,12 +41,15 @@ function Cart(items: Array<CartItemInput>): void {
 		for(let i:number = 0; i < items.length; i++) {
 			let newItem: CartItem = new this.Item(items[i].id, items[i].price);
 			this.items[i] = newItem;
+			//this.addProductBtnEventListener(items[i].id);
 			this.addQuantityEventListener(items[i].id);
 		}
+		//this.addShippingEventListener();
+		//this.addPayNowBtnEventListener();
 
 		this.updateCartItems();
-		this.updateCartShippingEl();
-		this.updateCartTotalEl();
+		this.updateCartShipping();
+		this.updateCartTotal();
 		return true;
 	}
 
@@ -68,12 +77,13 @@ function Cart(items: Array<CartItemInput>): void {
 			let item = this.getCartItem(itemId);
 			item.quantity = quantity;
 			this.updateCartItems();
-			this.updateCartTotalEl();
+			this.updateCartShipping();
+			this.updateCartTotal();
 		}.bind(this), false );
 	}
 
 	// add event listeners to individual product buy now buttons
-	this.addBuyNowEventListener = function(itemId: string) {
+	this.addProductBtnEventListener = function(itemId: string) {
 		// let el:HTMLElement = document.getElementById('quantity' + itemId);
 		// el.addEventListener('input', function(e): void {
 		// 	let el = e.target;
@@ -81,13 +91,15 @@ function Cart(items: Array<CartItemInput>): void {
 		// 	let quantity:number = parseInt(el.value);
 		// 	let item = this.getCartItem(itemId);
 		// 	item.quantity = quantity;
-		// 	this.updateCartShippingEl();
-		// 	this.updateCartTotalEl();
+		// 	this.updateCartShipping();
+		// 	this.updateCartTotal();
 		// }.bind(this), false );
 	}
 
 	// add event listener to shipping radio buttons
 	this.addShippingEventListener = function() {
+		// get shipping region
+
 		// let el:HTMLElement = document.getElementById('quantity' + itemId);
 		// el.addEventListener('input', function(e): void {
 		// 	let el = e.target;
@@ -95,13 +107,15 @@ function Cart(items: Array<CartItemInput>): void {
 		// 	let quantity:number = parseInt(el.value);
 		// 	let item = this.getCartItem(itemId);
 		// 	item.quantity = quantity;
-		// 	this.updateCartShippingEl();
-		// 	this.updateCartTotalEl();
+		// 	this.updateCartShipping();
+		// 	this.updateCartTotal();
 		// }.bind(this), false );
+
+		// this.shippingRegion = ;
 	}
 
 	// add event listener to pay now / submit button
-	this.addPayNowEventListener = function() {
+	this.addPayNowBtnEventListener = function() {
 		// let el:HTMLElement = document.getElementById('quantity' + itemId);
 		// el.addEventListener('input', function(e): void {
 		// 	let el = e.target;
@@ -109,8 +123,8 @@ function Cart(items: Array<CartItemInput>): void {
 		// 	let quantity:number = parseInt(el.value);
 		// 	let item = this.getCartItem(itemId);
 		// 	item.quantity = quantity;
-		// 	this.updateCartShippingEl();
-		// 	this.updateCartTotalEl();
+		// 	this.updateCartShipping();
+		// 	this.updateCartTotal();
 		// }.bind(this), false );
 	}
 
@@ -130,13 +144,14 @@ function Cart(items: Array<CartItemInput>): void {
 		subtotalEl.innerHTML = '£' + subtotal;
 	}
 
-	this.updateCartShippingEl = function(): void {
+	this.updateCartShipping = function(shippingRegion:number): void {
+		this.updateShippingTotal();
 		let shippingTotal:number = this.shippingTotal;
 		let shippingTotalEl:HTMLElement = document.getElementById('totalShippingTotal');
 		shippingTotalEl.innerHTML = '£' + shippingTotal;
 	}
 
-	this.updateCartTotalEl = function(): void {
+	this.updateCartTotal = function(): void {
 		this.updateTotal();
 		let total:number = this.total;
 		let totalTotalEl:HTMLElement = document.getElementById('totalTotal');

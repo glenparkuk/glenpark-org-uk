@@ -20,8 +20,11 @@ function Cart(items) {
         for (var i = 0; i < items.length; i++) {
             var newItem = new this.Item(items[i].id, items[i].price);
             this.items[i] = newItem;
+            //this.addProductBtnEventListener(items[i].id);
             this.addQuantityEventListener(items[i].id);
         }
+        //this.addShippingEventListener();
+        //this.addPayNowBtnEventListener();
         this.updateCartItems();
         this.updateCartShippingEl();
         this.updateCartTotalEl();
@@ -53,7 +56,7 @@ function Cart(items) {
         }.bind(this), false);
     };
     // add event listeners to individual product buy now buttons
-    this.addBuyNowEventListener = function (itemId) {
+    this.addProductBtnEventListener = function (itemId) {
         // let el:HTMLElement = document.getElementById('quantity' + itemId);
         // el.addEventListener('input', function(e): void {
         // 	let el = e.target;
@@ -79,7 +82,7 @@ function Cart(items) {
         // }.bind(this), false );
     };
     // add event listener to pay now / submit button
-    this.addPayNowEventListener = function () {
+    this.addPayNowBtnEventListener = function () {
         // let el:HTMLElement = document.getElementById('quantity' + itemId);
         // el.addEventListener('input', function(e): void {
         // 	let el = e.target;
