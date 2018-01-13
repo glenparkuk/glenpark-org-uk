@@ -1,55 +1,136 @@
 function Cart(items) {
-    this.items = {};
+    this.items = [];
+    this.shippingTotal = 0;
+    this.subtotal = 0;
+    this.total = 0;
+    this.updateSubtotal = function () {
+        var subtotal = 0;
+        for (var i = 0; i < this.items.length; i++) {
+            subtotal += this.items[i].total;
+        }
+        this.subtotal = subtotal;
+    };
+    this.updateTotal = function () {
+        this.total = this.shippingTotal + this.subtotal;
+    };
     this.init = function () {
         if (items.length < 1) {
             return false;
         }
         for (var i = 0; i < items.length; i++) {
-            this.items[items[i].id] = items[i];
+            var newItem = new this.Item(items[i].id, items[i].price);
+            this.items[i] = newItem;
             this.addQuantityEventListener(items[i].id);
         }
-        this.updateCart();
+        this.updateCartItems();
+        this.updateCartShippingEl();
+        this.updateCartTotalEl();
+        return true;
     };
-    this.getItemQuantity = function (itemId) {
-        var q = document.getElementById('quantity' + itemId).value;
-        return q;
+    this.Item = function (id, price) {
+        this.id = id;
+        this.price = price;
+        this.quantity = 0;
+        this.total = 0;
+    };
+    this.getCartItem = function (itemId) {
+        for (var i = 0; i < this.items.length; i++) {
+            if (this.items[i].id === itemId) {
+                return this.items[i];
+            }
+        }
+    };
+    this.addQuantityEventListener = function (itemId) {
+        var el = document.getElementById('quantity' + itemId);
+        el.addEventListener('input', function (e) {
+            var el = e.target;
+            var itemId = el.id.replace('quantity', ''); // TODO: improve this with data targets in HTML
+            var quantity = parseInt(el.value);
+            var item = this.getCartItem(itemId);
+            item.quantity = quantity;
+            this.updateCartItems();
+            this.updateCartTotalEl();
+        }.bind(this), false);
+    };
+    // add event listeners to individual product buy now buttons
+    this.addBuyNowEventListener = function (itemId) {
+        // let el:HTMLElement = document.getElementById('quantity' + itemId);
+        // el.addEventListener('input', function(e): void {
+        // 	let el = e.target;
+        // 	let itemId:string = el.id.replace('quantity', ''); // TODO: improve this with data targets in HTML
+        // 	let quantity:number = parseInt(el.value);
+        // 	let item = this.getCartItem(itemId);
+        // 	item.quantity = quantity;
+        // 	this.updateCartShippingEl();
+        // 	this.updateCartTotalEl();
+        // }.bind(this), false );
+    };
+    // add event listener to shipping radio buttons
+    this.addShippingEventListener = function () {
+        // let el:HTMLElement = document.getElementById('quantity' + itemId);
+        // el.addEventListener('input', function(e): void {
+        // 	let el = e.target;
+        // 	let itemId:string = el.id.replace('quantity', ''); // TODO: improve this with data targets in HTML
+        // 	let quantity:number = parseInt(el.value);
+        // 	let item = this.getCartItem(itemId);
+        // 	item.quantity = quantity;
+        // 	this.updateCartShippingEl();
+        // 	this.updateCartTotalEl();
+        // }.bind(this), false );
+    };
+    // add event listener to pay now / submit button
+    this.addPayNowEventListener = function () {
+        // let el:HTMLElement = document.getElementById('quantity' + itemId);
+        // el.addEventListener('input', function(e): void {
+        // 	let el = e.target;
+        // 	let itemId:string = el.id.replace('quantity', ''); // TODO: improve this with data targets in HTML
+        // 	let quantity:number = parseInt(el.value);
+        // 	let item = this.getCartItem(itemId);
+        // 	item.quantity = quantity;
+        // 	this.updateCartShippingEl();
+        // 	this.updateCartTotalEl();
+        // }.bind(this), false );
+    };
+    this.updateCartItems = function () {
+        for (var i = 0; i < this.items.length; i++) {
+            // update cart items totals
+            var price = this.items[i].price;
+            var quantity = this.items[i].quantity;
+            var total = this.getItemTotal(price, quantity);
+            this.items[i].total = total;
+            this.updateCartItemTotalEl(this.items[i]);
+        }
+        this.updateSubtotal();
+        var subtotal = this.subtotal;
+        var subtotalEl = document.getElementById('totalSubTotal');
+        subtotalEl.innerHTML = '£' + subtotal;
+    };
+    this.updateCartShippingEl = function () {
+        var shippingTotal = this.shippingTotal;
+        var shippingTotalEl = document.getElementById('totalShippingTotal');
+        shippingTotalEl.innerHTML = '£' + shippingTotal;
+    };
+    this.updateCartTotalEl = function () {
+        this.updateTotal();
+        var total = this.total;
+        var totalTotalEl = document.getElementById('totalTotal');
+        totalTotalEl.innerHTML = '£' + total;
     };
     this.getItemTotal = function (price, quantity) {
         return price * quantity;
     };
-    this.updateCart = function () {
-        var subtotal = 0;
-        var subtotalElement = document.getElementById('totalSubTotal');
-        for (var i = 0; i < this.items.length - 1; i++) {
-            this.updateItemTotalElement(this.items[i].id);
-            subtotal += this.items[i].total;
+    this.updateCartItemTotalEl = function (item) {
+        var el = document.getElementById('total' + item.id);
+        if (!el) {
+            return false;
         }
-        subtotalElement.innerHTML = '£' + subtotal;
-    };
-    this.updateItemTotalElement = function (itemId) {
-        var el = document.getElementById('total' + itemId);
-        el.innerHTML = '£' + this.items[itemId].total;
-    };
-    this.addQuantityEventListener = function (itemId) {
-        var el = document.getElementById('quantity' + itemId);
-        el.addEventListener('input', this.onQuantityUpdateEvent); // TODO: use event object - this.onQuantityUpdate(e)
-    };
-    this.onQuantityUpdateEvent = function (e) {
-        var el = e.target;
-        var itemId = el.id.replace('quantity', ''); // TODO: improve this with data targets in HTML
-        cart.onQuantityUpdate(itemId);
-    };
-    this.onQuantityUpdate = function (itemId) {
-        console.log("onQuantityUpdate");
-        var item = this.items[itemId];
-        item.quantity = this.getItemQuantity(itemId);
-        item.total = this.getItemTotal(item.price, item.quantity);
-        this.updateCart();
+        el.innerHTML = '£' + item.total;
+        return true;
     };
 }
-var AOCPaperback = { id: 'AOCPaperback', price: 12.5, quantity: 0, total: 0 };
-var AOCCD = { id: 'AOCAudioCD', price: 10, quantity: 0, total: 0 };
-var PWPamphlet = { id: 'PWPamphlet', price: 2.5, quantity: 0, total: 0 };
-var itemArray = [AOCPaperback, AOCCD, PWPamphlet];
+var i1 = { id: 'AOCPaperback', price: 12.5 };
+var i2 = { id: 'AOCAudioCD', price: 10 };
+var i3 = { id: 'PWPamphlet', price: 2.5 };
+var itemArray = [i1, i2, i3];
 var cart = new Cart(itemArray);
 cart.init();

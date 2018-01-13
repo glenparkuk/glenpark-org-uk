@@ -1,74 +1,167 @@
-interface Item {
+interface CartItemInput {
+	id: string,
+	price: number
+}
+interface CartItem {
 	id: string,
 	price: number,
 	quantity: number,
 	total: number
 }
 
-function Cart(items: Array<Item>): void {
+function Cart(items: Array<CartItemInput>): void {
 
-	this.items = {};
+	this.items = [];
+	this.shippingTotal = 0;
+	this.subtotal = 0;
+	this.total = 0;
 
-	this.init = function() {
+	this.updateSubtotal = function():void {
+		let subtotal:number = 0;
+		for(let i:number = 0; i < this.items.length; i++) {
+			subtotal += this.items[i].total;
+		}
+		this.subtotal = subtotal;
+	}
+	this.updateTotal = function():void {
+		this.total = this.shippingTotal + this.subtotal;
+	}
+
+	this.init = function(): boolean {
 		if(items.length < 1) {
 			return false;
 		}
 
-		for(let i = 0; i < items.length; i++) {
-			this.items[items[i].id] = items[i];
+		for(let i:number = 0; i < items.length; i++) {
+			let newItem: CartItem = new this.Item(items[i].id, items[i].price);
+			this.items[i] = newItem;
 			this.addQuantityEventListener(items[i].id);
 		}
 
-		this.updateCart();
+		this.updateCartItems();
+		this.updateCartShippingEl();
+		this.updateCartTotalEl();
+		return true;
 	}
 
-	this.getItemQuantity = function(itemId: string) {
-		let q = (<HTMLInputElement>document.getElementById('quantity' + itemId)).value;
-		return q;
+	this.Item = function(id: string, price: number) {
+		this.id = id;
+		this.price = price;
+		this.quantity = 0;
+		this.total = 0;
 	}
-	
-	this.getItemTotal = function(price: number, quantity: number) {
-		return price * quantity;
-	}
-	
-	this.updateCart = function() {
-		let subtotal = 0;
-		let subtotalElement = document.getElementById('totalSubTotal');
-		for(let i = 0; i < this.items.length-1; i++) {
-			this.updateItemTotalElement(this.items[i].id);
-			subtotal += this.items[i].total;
+
+	this.getCartItem = function(itemId:string):CartItem {
+		for(let i:number = 0; i < this.items.length; i++) {
+			if (this.items[i].id === itemId) {
+				return this.items[i];
+			}
 		}
-		subtotalElement.innerHTML = '£' + subtotal;
-	}
-
-	this.updateItemTotalElement = function(itemId: string) {
-		let el = document.getElementById('total' + itemId);
-		el.innerHTML = '£' + this.items[itemId].total;
 	}
 
 	this.addQuantityEventListener = function(itemId: string) {
-		let el = document.getElementById('quantity' + itemId);
-		el.addEventListener('input', this.onQuantityUpdateEvent ); // TODO: use event object - this.onQuantityUpdate(e)
+		let el:HTMLElement = document.getElementById('quantity' + itemId);
+		el.addEventListener('input', function(e): void {
+			let el = e.target;
+			let itemId:string = el.id.replace('quantity', ''); // TODO: improve this with data targets in HTML
+			let quantity:number = parseInt(el.value);
+			let item = this.getCartItem(itemId);
+			item.quantity = quantity;
+			this.updateCartItems();
+			this.updateCartTotalEl();
+		}.bind(this), false );
 	}
-	this.onQuantityUpdateEvent = function(e: any) {
-		let el = e.target;
-		let itemId = el.id.replace('quantity', ''); // TODO: improve this with data targets in HTML
-		cart.onQuantityUpdate(itemId); // TODO: I don't like this - I should be able to use this.onQuantityUpdate(itemId)
+
+	// add event listeners to individual product buy now buttons
+	this.addBuyNowEventListener = function(itemId: string) {
+		// let el:HTMLElement = document.getElementById('quantity' + itemId);
+		// el.addEventListener('input', function(e): void {
+		// 	let el = e.target;
+		// 	let itemId:string = el.id.replace('quantity', ''); // TODO: improve this with data targets in HTML
+		// 	let quantity:number = parseInt(el.value);
+		// 	let item = this.getCartItem(itemId);
+		// 	item.quantity = quantity;
+		// 	this.updateCartShippingEl();
+		// 	this.updateCartTotalEl();
+		// }.bind(this), false );
 	}
-	this.onQuantityUpdate = function(itemId: string) {
-		console.log("onQuantityUpdate");
-		let item = this.items[itemId];
-		item.quantity = this.getItemQuantity(itemId);
-		item.total = this.getItemTotal(item.price, item.quantity);
-		this.updateCart();
+
+	// add event listener to shipping radio buttons
+	this.addShippingEventListener = function() {
+		// let el:HTMLElement = document.getElementById('quantity' + itemId);
+		// el.addEventListener('input', function(e): void {
+		// 	let el = e.target;
+		// 	let itemId:string = el.id.replace('quantity', ''); // TODO: improve this with data targets in HTML
+		// 	let quantity:number = parseInt(el.value);
+		// 	let item = this.getCartItem(itemId);
+		// 	item.quantity = quantity;
+		// 	this.updateCartShippingEl();
+		// 	this.updateCartTotalEl();
+		// }.bind(this), false );
+	}
+
+	// add event listener to pay now / submit button
+	this.addPayNowEventListener = function() {
+		// let el:HTMLElement = document.getElementById('quantity' + itemId);
+		// el.addEventListener('input', function(e): void {
+		// 	let el = e.target;
+		// 	let itemId:string = el.id.replace('quantity', ''); // TODO: improve this with data targets in HTML
+		// 	let quantity:number = parseInt(el.value);
+		// 	let item = this.getCartItem(itemId);
+		// 	item.quantity = quantity;
+		// 	this.updateCartShippingEl();
+		// 	this.updateCartTotalEl();
+		// }.bind(this), false );
+	}
+
+	this.updateCartItems = function():void {
+		for(let i = 0; i < this.items.length; i++) {
+			// update cart items totals
+			let price:number = this.items[i].price;
+			let quantity:number = this.items[i].quantity;
+			let total:number = this.getItemTotal(price, quantity);
+			this.items[i].total = total;
+
+			this.updateCartItemTotalEl(this.items[i]);
+		}
+		this.updateSubtotal();
+		let subtotal:number = this.subtotal;
+		let subtotalEl:HTMLElement = document.getElementById('totalSubTotal');
+		subtotalEl.innerHTML = '£' + subtotal;
+	}
+
+	this.updateCartShippingEl = function(): void {
+		let shippingTotal:number = this.shippingTotal;
+		let shippingTotalEl:HTMLElement = document.getElementById('totalShippingTotal');
+		shippingTotalEl.innerHTML = '£' + shippingTotal;
+	}
+
+	this.updateCartTotalEl = function(): void {
+		this.updateTotal();
+		let total:number = this.total;
+		let totalTotalEl:HTMLElement = document.getElementById('totalTotal');
+		totalTotalEl.innerHTML = '£' + total;
+	}
+
+	this.getItemTotal = function(price: number, quantity: number):number {
+		return price * quantity;
+	}
+
+	this.updateCartItemTotalEl = function(item: CartItem):boolean {
+		let el:HTMLElement = document.getElementById('total' + item.id);
+		if(!el) {
+			return false;
+		}
+		el.innerHTML = '£' + item.total;
+		return true;
 	}
 }
 
-let AOCPaperback = { id:'AOCPaperback', price: 12.5, quantity: 0, total: 0 };
-let AOCCD = { id: 'AOCAudioCD', price: 10, quantity: 0, total: 0 };
-let PWPamphlet = { id: 'PWPamphlet', price: 2.5, quantity: 0, total: 0 };
+let i1 = { id:'AOCPaperback', price: 12.5 };
+let i2 = { id: 'AOCAudioCD', price: 10 };
+let i3 = { id: 'PWPamphlet', price: 2.5 };
 
-let itemArray = [AOCPaperback, AOCCD, PWPamphlet];
+let itemArray = [i1,i2,i3];
 
 let cart = new Cart(itemArray);
 cart.init();
