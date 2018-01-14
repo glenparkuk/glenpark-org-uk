@@ -536,7 +536,10 @@ or spiritual into muscular tension&rdquo;</h2>
         </tr>
         <tr>
           <td colspan="3"></td>
-          <td colspan="1" class="totals-column"><input class="submit-btn" id="checkoutSubmit" type="submit"></input></td>
+          <td colspan="1" class="totals-column">
+            <div id="paynowButton"></div>
+            <input class="submit-btn" id="checkoutSubmit" type="submit"></input>
+          </td>
         </tr>
       </tbody>
     </table>
@@ -734,19 +737,22 @@ Select Country
   var paypalTag = document.createElement('script');
   paypalTag.src = "https://www.paypalobjects.com/api/checkout.js";
   paypalTag.setAttribute('data-version-4', '');
-
-  var jsCartScript = document.createElement('script');
-  jsCartScript.src = "./src/js/jscart.js";
-  jsCartScript.addEventListener("load", function(e) {
-    initialiseCart();
+  paypalTag.addEventListener("load", function() {
+    initialisePaypalExpressCheckout();
   });
 
-  var paypalCheckoutScriptEl = document.getElementById('paypalExpressCheckout');
-  paypalCheckoutScriptEl.parentNode.insertBefore(paypalTag, paypalCheckoutScriptEl);
-  paypalCheckoutScriptEl.parentNode.removeChild(paypalCheckoutScriptEl);
+  var jsCartTag = document.createElement('script');
+  jsCartTag.src = "./src/js/jscart.js";
+  jsCartTag.addEventListener("load", function() {
+    initialiseCart();
+
+    var paypalCheckoutScriptEl = document.getElementById('paypalExpressCheckout');
+    paypalCheckoutScriptEl.parentNode.insertBefore(paypalTag, paypalCheckoutScriptEl);
+    paypalCheckoutScriptEl.parentNode.removeChild(paypalCheckoutScriptEl);
+  });
 
   var jsCartScriptEl = document.getElementById('jsCartScript');
-  jsCartScriptEl.parentNode.insertBefore(jsCartScript, jsCartScriptEl);
+  jsCartScriptEl.parentNode.insertBefore(jsCartTag, jsCartScriptEl);
   jsCartScriptEl.parentNode.removeChild(jsCartScriptEl);
 </script>
 

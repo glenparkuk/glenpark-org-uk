@@ -7,6 +7,59 @@ function initialiseCart() {
 	cart.init();
 }
 
+function initialisePaypalExpressCheckout() {
+	paypal.Button.render({
+        env: 'sandbox',
+
+        client: {
+            sandbox:    'Af-ScnK1c8h5X3JeNRqcmGhbUAMToEHgVXtUsz1-TewphtVbc-vFYp158a2HqYktQVCJ6mtEu5nTveJS',
+            //production: 'Af-ScnK1c8h5X3JeNRqcmGhbUAMToEHgVXtUsz1-TewphtVbc-vFYp158a2HqYktQVCJ6mtEu5nTveJS'  // from https://developer.paypal.com/developer/applications/
+        },
+
+        style: {
+            //label: 'pay',
+            size:  'responsive',    // small | medium | large | responsive
+            shape: 'rect',     // pill | rect
+            //color: 'blue',      // gold | blue | silver | black
+            //tagline: false
+        },
+
+        // Pass the payment details for your transaction
+        // See https://developer.paypal.com/docs/api/payments/#payment_create for the expected json parameters
+        payment: function(data, actions) {
+            var total = cart.total;
+            return actions.payment.create({
+                intent: "sale",
+                transactions: [
+                    {
+                        amount: {
+                            total:    total,
+                            currency: 'GBP'
+                        },
+                        "description": accountId
+                    }
+                ]
+            });
+        },
+
+        // Display a "Pay Now" button rather than a "Continue" button
+        commit: true,
+
+        // Pass a function to be called when the customer completes the payment
+        onAuthorize: function(data, actions) {
+            console.log('The payment was authorized!');
+
+        },
+
+        // Pass a function to be called when the customer cancels the payment
+
+        onCancel: function(data) {
+            console.log('The payment was cancelled!');
+        }
+
+    }, '#paynowButton');
+}
+
 function menuHovers() {
 	
 	//wrap H6 with spans
