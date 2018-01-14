@@ -65,7 +65,13 @@ function Cart(items: Array<CartItemInput>): void {
 				let shippingTotal:number = this.shippingMatrix[this.shippingRegion].largeLetter;
 				this.shippingTotal = shippingTotal;
 			} else {
-				let shippingTotal:number = this.shippingMatrix[this.shippingRegion].smallParcel1000;
+				// if (this.totalWeight > 250) {
+			// 	var parcelWeight = 500;
+			// } else if (this.totalWeight > 500) {
+			// 	var parcelWeight = 750;
+			// }
+
+				let shippingTotal:number = this.shippingMatrix[this.shippingRegion].smallParcel + parcelWeight;
 				this.shippingTotal = shippingTotal;	
 			}
 		} else {
