@@ -337,12 +337,7 @@ or spiritual into muscular tension&rdquo;</h2>
 <div class="paypalbtn">
 <h4 style="float:left"><strong>Buy <em>The Art of Changing</em></strong></h4>
 <div style="float:left;padding:10px 0 0 20px;">
-<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
-<input type="hidden" name="cmd" value="_s-xclick">
-<input type="hidden" name="hosted_button_id" value="JGBGRAA3RVQAA">
-<input type="image" src="https://www.paypalobjects.com/en_GB/i/btn/btn_buynow_LG.gif" border="0" name="submit" alt="PayPal – The safer, easier way to pay online!">
-<img alt="" border="0" src="https://www.paypalobjects.com/en_GB/i/scr/pixel.gif" width="1" height="1">
-</form>
+<input class="submit-btn" id="buynowAOCPaperback" type="submit"></input>
 
 </div>
 </div>
@@ -475,7 +470,7 @@ or spiritual into muscular tension&rdquo;</h2>
 <br /><br />
 <hr>
 
-<p><span class="boldsubtitle">Buy Now</span></p>
+<p id="buyNow"><span class="boldsubtitle">Buy Now</span></p>
 
   <!-- <div style="float:left;">
   <p>Buy multiple items and save on postage.</p>
@@ -522,10 +517,10 @@ or spiritual into muscular tension&rdquo;</h2>
           <td colspan="4" class="shipping">
               <p>Please select your country</p>
               <ul id="shippingOptions">
-                <li><input type="radio" id="shippingUnitedKingdon" name="shipping" value="region1">United Kingdom</li>
-                <li><input type="radio" id="shippingEurope" name="shipping" value="region2">Europe</li>
-                <li><input type="radio" id="shippingAmericaCanadaAsia" name="shipping" value="region3">America, South America, Canada and Asia</li>
-                <li><input type="radio" id="shippingWorld" name="shipping" value="region4">Rest of World</li>
+                <li><input type="radio" id="shippingUnitedKingdon" name="shipping-region" value="1">United Kingdom</li>
+                <li><input type="radio" id="shippingEurope" name="shipping-region" value="2">Europe</li>
+                <li><input type="radio" id="shippingAmericaCanadaAsia" name="shipping-region" value="3">America, South America, Canada and Asia</li>
+                <li><input type="radio" id="shippingWorld" name="shipping-region" value="4">Rest of World</li>
               </ul>
           </td>
         </tr>
@@ -733,10 +728,11 @@ Select Country
 </div>
 <!-- footer2 container ends -->
 
-<script type="text/javascript" src="src/js/jscart.js"></script>
+<div id="paypalExpressCheckout"></div>
+<div id="jsCartScript"></div>
+<script type="text/javascript">
 
-
-
+</script>
 
 </body>
 </html>
