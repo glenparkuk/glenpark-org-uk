@@ -1,3 +1,12 @@
+function initialiseCart() {
+	var i1 = { id: 'AOCPaperback', price: 12.5 };
+	var i2 = { id: 'AOCAudioCD', price: 10 };
+	var i3 = { id: 'PWPamphlet', price: 2.5 };
+	var itemArray = [i1, i2, i3];
+	var cart = new Cart(itemArray);
+	cart.init();
+}
+
 function menuHovers() {
 	
 	//wrap H6 with spans

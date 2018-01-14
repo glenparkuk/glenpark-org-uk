@@ -731,7 +731,23 @@ Select Country
 <div id="paypalExpressCheckout"></div>
 <div id="jsCartScript"></div>
 <script type="text/javascript">
+  var paypalTag = document.createElement('script');
+  paypalTag.src = "https://www.paypalobjects.com/api/checkout.js";
+  paypalTag.setAttribute('data-version-4', '');
 
+  var jsCartScript = document.createElement('script');
+  jsCartScript.src = "./src/js/jscart.js";
+  jsCartScript.addEventListener("load", function(e) {
+    initialiseCart();
+  });
+
+  var paypalCheckoutScriptEl = document.getElementById('paypalExpressCheckout');
+  paypalCheckoutScriptEl.parentNode.insertBefore(paypalTag, paypalCheckoutScriptEl);
+  paypalCheckoutScriptEl.parentNode.removeChild(paypalCheckoutScriptEl);
+
+  var jsCartScriptEl = document.getElementById('jsCartScript');
+  jsCartScriptEl.parentNode.insertBefore(jsCartScript, jsCartScriptEl);
+  jsCartScriptEl.parentNode.removeChild(jsCartScriptEl);
 </script>
 
 </body>
