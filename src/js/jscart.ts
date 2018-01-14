@@ -18,8 +18,10 @@ function Cart(items: Array<CartItemInput>): void {
 	this.total = 0;
 
 	this.updateShippingTotal = function():void {
-		// TODO: get Royal Mail shipping cost matrix
-		// TODO: cross reference shipping region with cart items
+		this.region1 = 2.50;
+		this.region2 = 5;
+		this.region3 = 7.5;
+		this.region3 = 10;
 	}
 
 	this.updateSubtotal = function():void {
@@ -50,6 +52,7 @@ function Cart(items: Array<CartItemInput>): void {
 		this.updateCartItems();
 		this.updateCartShipping();
 		this.updateCartTotal();
+		this.addShippingEventListener()
 		return true;
 	}
 
@@ -100,19 +103,36 @@ function Cart(items: Array<CartItemInput>): void {
 	this.addShippingEventListener = function() {
 		// get shipping region
 
-		// let el:HTMLElement = document.getElementById('quantity' + itemId);
-		// el.addEventListener('input', function(e): void {
-		// 	let el = e.target;
-		// 	let itemId:string = el.id.replace('quantity', ''); // TODO: improve this with data targets in HTML
-		// 	let quantity:number = parseInt(el.value);
-		// 	let item = this.getCartItem(itemId);
-		// 	item.quantity = quantity;
-		// 	this.updateCartShipping();
-		// 	this.updateCartTotal();
-		// }.bind(this), false );
+		let el:HTMLElement = document.getElementById('shippingOptions');
+		let shippingArr = el.getElementsByTagName('input');
+		
+		for(let i:number = 0; i < shippingArr.length; i++) {
+			shippingArr[i].addEventListener('change', function(e): void {
+				let item = e.target;
+				// if (item.value = 'region1') {
+				// 	console.log('region1');
+				// 	this.shippingRegion = 5;
+				// } else if(item.value = 'region2'){
+				// 	console.log('region2');
+				// 	this.shippingRegion = 10;
+				// } else if(item.value = 'region3'){
+				// 	console.log('region3');
+				// 	this.shippingRegion = 15;
+				// } else if(item.value = 'region4'){
+				// 	console.log('region4');
+				// 	this.shippingRegion = 20;
+				// }			
 
-		// this.shippingRegion = ;
+				// return shippingRegion = this.shippingRegion;
+
+			}.bind(this), false );
+		}
+
+		this.updateCartShipping();
+		this.updateCartTotal();
 	}
+
+		
 
 	// add event listener to pay now / submit button
 	this.addPayNowBtnEventListener = function() {
