@@ -1,7 +1,7 @@
 function initialiseCart() {
-	var i1 = { id: 'AOCPaperback', price: 12.5 };
-	var i2 = { id: 'AOCAudioCD', price: 10 };
-	var i3 = { id: 'PWPamphlet', price: 2.5 };
+	var i1 = { id: 'AOCPaperback', price: 12.5, weight: 700 };
+	var i2 = { id: 'AOCAudioCD', price: 10, weight: 100};
+	var i3 = { id: 'PWPamphlet', price: 2.5, weight: 10};
 	var itemArray = [i1, i2, i3];
 	var cart = new Cart(itemArray);
 	cart.init();
