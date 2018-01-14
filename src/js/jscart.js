@@ -108,7 +108,7 @@ function Cart(items) {
             var price = this.items[i].price;
             var quantity = this.items[i].quantity;
             var total = this.getItemTotal(price, quantity);
-            this.items[i].total = total;
+            this.items[i].total = total > 0 ? total : 0;
             this.updateCartItemTotalEl(this.items[i]);
         }
         this.updateSubtotal();
@@ -124,7 +124,7 @@ function Cart(items) {
     };
     this.updateCartTotal = function () {
         this.updateTotal();
-        var total = this.total;
+        var total = this.total > 0 ? this.total : 0;
         var totalTotalEl = document.getElementById('totalTotal');
         totalTotalEl.innerHTML = '£' + total;
     };
