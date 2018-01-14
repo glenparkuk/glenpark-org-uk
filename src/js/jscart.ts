@@ -73,7 +73,7 @@ function Cart(items: Array<CartItemInput>): void {
 		el.addEventListener('input', function(e): void {
 			let el = e.target;
 			let itemId:string = el.id.replace('quantity', ''); // TODO: improve this with data targets in HTML
-			let quantity:number = parseInt(el.value);
+			let quantity:number = parseInt(el.value) || 0;
 			let item = this.getCartItem(itemId);
 			item.quantity = quantity;
 			this.updateCartItems();

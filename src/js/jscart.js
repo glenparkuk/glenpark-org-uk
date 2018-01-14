@@ -53,7 +53,7 @@ function Cart(items) {
         el.addEventListener('input', function (e) {
             var el = e.target;
             var itemId = el.id.replace('quantity', ''); // TODO: improve this with data targets in HTML
-            var quantity = parseInt(el.value);
+            var quantity = parseInt(el.value) || 0;
             var item = this.getCartItem(itemId);
             item.quantity = quantity;
             this.updateCartItems();
@@ -108,7 +108,7 @@ function Cart(items) {
             var price = this.items[i].price;
             var quantity = this.items[i].quantity;
             var total = this.getItemTotal(price, quantity);
-            this.items[i].total = total > 0 ? total : 0;
+            this.items[i].total = total;
             this.updateCartItemTotalEl(this.items[i]);
         }
         this.updateSubtotal();
@@ -124,7 +124,7 @@ function Cart(items) {
     };
     this.updateCartTotal = function () {
         this.updateTotal();
-        var total = this.total > 0 ? this.total : 0;
+        var total = this.total;
         var totalTotalEl = document.getElementById('totalTotal');
         totalTotalEl.innerHTML = '£' + total;
     };
