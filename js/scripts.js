@@ -27,16 +27,34 @@ function initialisePaypalExpressCheckout() {
         // Pass the payment details for your transaction
         // See https://developer.paypal.com/docs/api/payments/#payment_create for the expected json parameters
         payment: function(data, actions) {
-            var total = cart.total;
+            var cartTotal = cart.total;
+            var cartItems = cart.items;
+
+            var items = [];
+            for(var i = 0; i < items.length; i++) {
+            	item = cartItems[i];
+            	items[i] = {
+            		"name": "hat",
+			        //"sku": "1",
+			        "price": item.price,
+			        "currency": "GBP",
+			        "quantity": item.quantity,
+			        "description": "Brown hat."
+			    };
+            }
+
             return actions.payment.create({
                 intent: "sale",
                 transactions: [
                     {
                         amount: {
-                            total:    total,
+                            total:    cartTotal,
                             currency: 'GBP'
                         },
-                        "description": accountId
+                        "description": accountId,
+                        "item_list": {
+					        "items": items,
+					    }
                     }
                 ]
             });

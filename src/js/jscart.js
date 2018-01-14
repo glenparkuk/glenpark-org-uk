@@ -5,10 +5,36 @@ function Cart(items) {
     this.subtotal = 0;
     this.total = 0;
     this.shippingMatrix = {
-        '1': { largeLetter: 2.52, smallParcel1000: 3.50, smallParcel2000: 5.50 },
-        '2': { largeLetter: 3.80, smallParcel250: 4.10, smallParcel500: 5.80, smallParcel750: 7.20, smallParcel1000: 8.60, smallParcel1250: 9.85, smallParcel1500: 11.10, smallParcel1750: 12.30, smallParcel2000: 13.45 },
-        '3': { largeLetter: 4.75, smallParcel250: 5.15, smallParcel500: 8.05, smallParcel750: 10.70, smallParcel1000: 13.30, smallParcel1250: 14.90, smallParcel1500: 16.50, smallParcel1750: 18.10, smallParcel2000: 19.65 },
-        '4': { largeLetter: 5.05, smallParcel250: 5.60, smallParcel500: 8.70, smallParcel750: 11.40, smallParcel1000: 14.05, smallParcel1250: 15.85, smallParcel1500: 17.75, smallParcel1750: 19.60, smallParcel2000: 21.40 }
+        '1': { largeLetter: 2.52,
+            smallParcel1000: 3.50,
+            smallParcel2000: 5.50 },
+        '2': { largeLetter: 3.80,
+            smallParcel250: 4.10,
+            smallParcel500: 5.80,
+            smallParcel750: 7.20,
+            smallParcel1000: 8.60,
+            smallParcel1250: 9.85,
+            smallParcel1500: 11.10,
+            smallParcel1750: 12.30,
+            smallParcel2000: 13.45 },
+        '3': { largeLetter: 4.75,
+            smallParcel250: 5.15,
+            smallParcel500: 8.05,
+            smallParcel750: 10.70,
+            smallParcel1000: 13.30,
+            smallParcel1250: 14.90,
+            smallParcel1500: 16.50,
+            smallParcel1750: 18.10,
+            smallParcel2000: 19.65 },
+        '4': { largeLetter: 5.05,
+            smallParcel250: 5.60,
+            smallParcel500: 8.70,
+            smallParcel750: 11.40,
+            smallParcel1000: 14.05,
+            smallParcel1250: 15.85,
+            smallParcel1500: 17.75,
+            smallParcel1750: 19.60,
+            smallParcel2000: 21.40 }
     };
     this.updateShippingTotal = function () {
         if (this.shippingRegion == 1 || this.shippingRegion == 2 || this.shippingRegion == 3 || this.shippingRegion == 4) {
@@ -23,7 +49,12 @@ function Cart(items) {
                 this.shippingTotal = shippingTotal;
             }
             else {
-                var shippingTotal = this.shippingMatrix[this.shippingRegion].smallParcel1000;
+                // if (this.totalWeight > 250) {
+                // 	var parcelWeight = 500;
+                // } else if (this.totalWeight > 500) {
+                // 	var parcelWeight = 750;
+                // }
+                var shippingTotal = this.shippingMatrix[this.shippingRegion].smallParcel + parcelWeight;
                 this.shippingTotal = shippingTotal;
             }
         }
@@ -58,11 +89,11 @@ function Cart(items) {
         this.updateDOMTotal();
         return true;
     };
-    this.Item = function (id, price) {
+    this.Item = function (id, price, weight) {
         this.id = id;
         this.price = price;
+        this.weight = weight;
         this.quantity = 0;
-        this.weight = 0;
         this.totalWeight = 0;
         this.total = 0;
     };
