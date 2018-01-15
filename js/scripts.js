@@ -1,9 +1,10 @@
+var cart;
 function initialiseCart() {
-	var i1 = { id: 'AOCPaperback', price: 12.5, weight: 700 };
-	var i2 = { id: 'AOCAudioCD', price: 10, weight: 100};
-	var i3 = { id: 'PWPamphlet', price: 2.5, weight: 10};
+	var i1 = { id: 'AOCPaperback', name: 'The Art of Changing', description: 'Paperback Book', price: 12.5, weight: 700 };
+	var i2 = { id: 'AOCAudioCD', name: 'The Art of Changing CD', description: 'Audio CD', price: 10, weight: 100};
+	var i3 = { id: 'PWPamphlet', name: 'An Interview with Peggy Williams (1916 – 2003)', description: 'Pamphlet', price: 2.5, weight: 10};
 	var itemArray = [i1, i2, i3];
-	var cart = new Cart(itemArray);
+	cart = new Cart(itemArray);
 	cart.init();
 }
 
@@ -27,31 +28,44 @@ function initialisePaypalExpressCheckout() {
         // Pass the payment details for your transaction
         // See https://developer.paypal.com/docs/api/payments/#payment_create for the expected json parameters
         payment: function(data, actions) {
-            var cartTotal = cart.total;
             var cartItems = cart.items;
 
             var items = [];
+            var description = '';
+            var consecutiveItem = false;
             for(var i = 0; i < items.length; i++) {
             	item = cartItems[i];
-            	items[i] = {
-            		"name": "hat",
-			        //"sku": "1",
-			        "price": item.price,
-			        "currency": "GBP",
-			        "quantity": item.quantity,
-			        "description": "Brown hat."
-			    };
+            	if(item.quantity > 0) {
+	            	var newItem = {
+	            		"name": item.name,
+				        //"sku": "1",
+				        "price": item.price,
+				        "currency": "GBP",
+				        "quantity": item.quantity,
+				        "description": item.description
+				    };
+				    items.push(newItem);
+				    if(consecutiveItem) {
+				    	description += ' & '
+				    }
+				    description += item.name;
+				    consecutiveItem = true;
+            	}
             }
 
             return actions.payment.create({
-                intent: "sale",
-                transactions: [
+                "intent": "sale",
+                "transactions": [
                     {
-                        amount: {
-                            total:    cartTotal,
-                            currency: 'GBP'
+                        "amount": {
+                            "total":    cart.total,
+                            "currency": 'GBP',
+                            "details": {
+						          "subtotal": cart.subtotal,
+						          "shipping": cart.shippingTotal,
+						        }
                         },
-                        "description": accountId,
+                        "description": description,
                         "item_list": {
 					        "items": items,
 					    }

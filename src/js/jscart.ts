@@ -1,10 +1,14 @@
 interface CartItemInput {
 	id: string,
+	name: string,
+	description: string,
 	price: number,
 	weight: number
 }
 interface CartItem {
 	id: string,
+	name: string,
+	description: string,
 	price: number,
 	quantity: number,
 	weight: number,
@@ -84,11 +88,13 @@ function Cart(items: Array<CartItemInput>): void {
 		return true;
 	}
 
-	this.Item = function(id: string, price: number) {
+	this.Item = function(id:string, name:string, description:string, price:number, weight:number) {
 		this.id = id;
+		this.name = name;
+		this.description = description;
 		this.price = price;
+		this.weight = weight;
 		this.quantity = 0;
-		this.weight = 0;
 		this.totalWeight = 0;
 		this.total = 0;
 	}
