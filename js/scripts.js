@@ -1,3 +1,4 @@
+console.log("test1");
 var cart;
 function initialiseCart() {
 	var i1 = { id: 'AOCPaperback', name: 'The Art of Changing', description: 'Paperback Book', price: 12.5, weight: 700 };
@@ -29,11 +30,10 @@ function initialisePaypalExpressCheckout() {
         // See https://developer.paypal.com/docs/api/payments/#payment_create for the expected json parameters
         payment: function(data, actions) {
             var cartItems = cart.items;
-
             var items = [];
             var description = '';
             var consecutiveItem = false;
-            for(var i = 0; i < items.length; i++) {
+            for(var i = 0; i < cartItems.length; i++) {
             	item = cartItems[i];
             	if(item.quantity > 0) {
 	            	var newItem = {
@@ -52,8 +52,7 @@ function initialisePaypalExpressCheckout() {
 				    consecutiveItem = true;
             	}
             }
-
-            return actions.payment.create({
+            var paymentObject = {
                 "intent": "sale",
                 "transactions": [
                     {
@@ -71,7 +70,9 @@ function initialisePaypalExpressCheckout() {
 					    }
                     }
                 ]
-            });
+            };
+            console.log(paymentObject);
+            return actions.payment.create(paymentObject);
         },
 
         // Display a "Pay Now" button rather than a "Continue" button

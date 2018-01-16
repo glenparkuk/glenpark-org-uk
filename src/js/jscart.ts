@@ -12,7 +12,6 @@ interface CartItem {
 	price: number,
 	quantity: number,
 	weight: number,
-	totalWeight: number,
 	total: number
 }
 
@@ -24,39 +23,76 @@ function Cart(items: Array<CartItemInput>): void {
 	this.subtotal = 0;
 	this.total = 0;
 
-	this.shippingMatrix = {
-		'1': {largeLetter: 2.52, smallParcel1000: 3.50, smallParcel2000: 5.50,},
-		'2': {largeLetter: 3.80, smallParcel250: 4.10, smallParcel500: 5.80, smallParcel750: 7.20, smallParcel1000: 8.60, smallParcel1250: 9.85, smallParcel1500: 11.10, smallParcel1750: 12.30, smallParcel2000: 13.45, },
-		'3': {largeLetter: 4.75, smallParcel250: 5.15, smallParcel500: 8.05, smallParcel750: 10.70, smallParcel1000: 13.30, smallParcel1250: 14.90, smallParcel1500: 16.50, smallParcel1750: 18.10, smallParcel2000: 19.65, },
-		'4': {largeLetter: 5.05, smallParcel250: 5.60, smallParcel500: 8.70, smallParcel750: 11.40, smallParcel1000: 14.05, smallParcel1250: 15.85, smallParcel1500: 17.75, smallParcel1750: 19.60, smallParcel2000: 21.40, }
+	this.largeLetterPrices = {
+		'region1': 2.52,
+		'region2': 3.80,
+		'region3': 4.75,
+		'region4': 5.05,
+	}
+	this.smallParcelWeightMatrix = {
+		'region1': {'1000': 3.50, '2000': 5.50,},
+		'region2': {'250': 4.10, '500': 5.80, '750': 7.20, '1000': 8.60, '1250': 9.85, '1500': 11.10, '1750': 12.30, '2000': 13.45, },
+		'region3': {'250': 5.15, '500': 8.05, '750': 10.70, '1000': 13.30, '1250': 14.90, '1500': 16.50, '1750': 18.10, '2000': 19.65, },
+		'region4': {'250': 5.60, '500': 8.70, '750': 11.40, '1000': 14.05, '1250': 15.85, '1500': 17.75, '1750': 19.60, '2000': 21.40, }
 	}
 
+	this.getWeightBracket = function(totalWeight:number, weightBrackets:number[]):number | boolean {
+		//console.log(weightBrackets);
+		if(weightBrackets.length < 2) {
+			return false
+		}
+		let mid:number = Math.ceil(weightBrackets.length/2);
+		if(totalWeight === weightBrackets[mid]) return weightBrackets[mid];
+		if(weightBrackets.length === 2) {
+			if(totalWeight > weightBrackets[0] && totalWeight < weightBrackets[1]){
+				return weightBrackets[mid];
+			}
+		}
+		if(totalWeight < weightBrackets[mid]) {
+			if(totalWeight > weightBrackets[mid-1]){
+				return weightBrackets[mid];
+			}
+			let leftHalf:number[] = weightBrackets.slice(0, mid); // Check this logic
+			return this.getWeightBracket(totalWeight, leftHalf)
+		} else if(totalWeight > weightBrackets[mid]) {
+			let rightHalf:number[] = weightBrackets.slice(mid, weightBrackets.length); // Check this logic
+			return this.getWeightBracket(totalWeight, rightHalf);
+		}
+		return false;
+	}
+	
 	this.updateShippingTotal = function():void {
 		if(this.shippingRegion == 1 || this.shippingRegion == 2 || this.shippingRegion == 3 || this.shippingRegion == 4) {
 			let AOCPaperback:CartItem = this.getItem('AOCPaperback');
 			let AOCAudioCD:CartItem = this.getItem('AOCAudioCD');
 			let PWPamphlet:CartItem = this.getItem('PWPamphlet');
 
-			if( AOCAudioCD.quantity == 0 && AOCPaperback.quantity == 0 && PWPamphlet.quantity == 0 ) {
+			if( AOCAudioCD.quantity < 1 && AOCPaperback.quantity < 1 && PWPamphlet.quantity < 1 ) {
+				// Sanity check
 				this.shippingTotal = 0;
 			} else if ( AOCAudioCD.quantity == 1 && AOCPaperback.quantity == 0 && PWPamphlet.quantity < 6 ) {
-				let shippingTotal:number = this.shippingMatrix[this.shippingRegion].largeLetter;
+				// Custom: if only 1 CD user large letter prices
+				let shippingTotal:number = this.largeLetterPrices['region' + this.shippingRegion]
 				this.shippingTotal = shippingTotal;
 			} else {
-				// if (this.totalWeight > 250) {
-			// 	var parcelWeight = 500;
-			// } else if (this.totalWeight > 500) {
-			// 	var parcelWeight = 750;
-			// }
-
-				let shippingTotal:number = this.shippingMatrix[this.shippingRegion].smallParcel + parcelWeight;
-				this.shippingTotal = shippingTotal;	
+				// Find small parcel weight
+				let weightBrackets:number[] = this.smallParcelWeights['region'+this.shippingRegion];
+				let weightBracket = this.getWeightBracket(this.totalWeight, weightBrackets);
+				this.shippingTotal = this.smallParcelWeightMatrix['region'+this.shippingRegion][weightBracket];
 			}
 		} else {
 			this.shippingTotal = 0;
 		}
 	}
-
+	this.updateTotalWeight = function():void {
+		let totalWeight:number = 0;
+		for(let i:number = 0; i < this.items.length; i++) {
+			let item:CartItem = this.items[i];
+			let itemTotalWeight:number = item.quantity * item.weight;
+			totalWeight += itemTotalWeight;
+		}
+		this.totalWeight = totalWeight;
+	}
 	this.updateSubtotal = function():void {
 		let subtotal:number = 0;
 		for(let i:number = 0; i < this.items.length; i++) {
@@ -72,9 +108,10 @@ function Cart(items: Array<CartItemInput>): void {
 		if(items.length < 1) {
 			return false;
 		}
+		this.smallParcelWeights = this.initialiseWeightArrays(this.smallParcelWeightMatrix);
 
 		for(let i:number = 0; i < items.length; i++) {
-			let newItem:CartItem = new this.Item(items[i].id, items[i].price);
+			let newItem:CartItem = new this.Item(items[i].id, items[i].name, items[i].description, items[i].price, items[i].weight);
 			this.items[i] = newItem;
 			this.addBuynowEventListener(items[i].id);
 			this.addQuantityEventListener(items[i].id);
@@ -95,7 +132,6 @@ function Cart(items: Array<CartItemInput>): void {
 		this.price = price;
 		this.weight = weight;
 		this.quantity = 0;
-		this.totalWeight = 0;
 		this.total = 0;
 	}
 
@@ -191,33 +227,46 @@ function Cart(items: Array<CartItemInput>): void {
 			// update total
 			let el:HTMLElement = document.getElementById('total' + item.id);
 			if(el) {
-				el.innerHTML = '£' + item.total;
+				el.innerHTML = '£' + item.total.toFixed(2);
 			} else {
 				console.log('Error: Item total element not found.')
 			}
 		}
+		this.updateTotalWeight();
 		this.updateSubtotal();
 		let subtotal:number = this.subtotal;
 		let subtotalEl:HTMLElement = document.getElementById('totalSubTotal');
-		subtotalEl.innerHTML = '£' + subtotal;
+		subtotalEl.innerHTML = '£' + subtotal.toFixed(2);
 	}
 
 	this.updateDOMShipping = function(shippingRegion:number): void {
 		this.updateShippingTotal();
 		let shippingTotal:number = this.shippingTotal;
 		let shippingTotalEl:HTMLElement = document.getElementById('totalShippingTotal');
-		shippingTotalEl.innerHTML = '£' + shippingTotal;
+		shippingTotalEl.innerHTML = '£' + shippingTotal.toFixed(2);
 	}
 
 	this.updateDOMTotal = function(): void {
 		this.updateTotal();
 		let total:number = this.total;
 		let totalTotalEl:HTMLElement = document.getElementById('totalTotal');
-		totalTotalEl.innerHTML = '£' + total;
+		totalTotalEl.innerHTML = '£' + total.toFixed(2);
 	}
 
 	this.getItemTotal = function(price: number, quantity: number):number {
 		return price * quantity;
+	}
+
+	this.initialiseWeightArrays = function(weightMatrix:object):object {
+		let weightArrays:object = {}
+		for(let regionProperty in weightMatrix) {
+			let weightArray:number[] = [0];
+			for( let weightProperty in weightMatrix[regionProperty] ) {
+				weightArray.push(parseInt(weightProperty))
+			}
+			weightArrays[regionProperty] = weightArray.sort(function(a, b){return a - b});;
+		}
+		return weightArrays;
 	}
 }
 /*
