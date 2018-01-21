@@ -16,6 +16,29 @@ function Cart(items) {
         'region3': { '250': 5.15, '500': 8.05, '750': 10.70, '1000': 13.30, '1250': 14.90, '1500': 16.50, '1750': 18.10, '2000': 19.65 },
         'region4': { '250': 5.60, '500': 8.70, '750': 11.40, '1000': 14.05, '1250': 15.85, '1500': 17.75, '1750': 19.60, '2000': 21.40 }
     };
+    /* Initialization */
+    // init
+    // Item
+    // addQuantityEventListener
+    // addBuynowEventListener
+    // addShippingEventListener
+    // initialiseWeightArrays
+    /* Operations */
+    // getItem
+    // getItemTotal
+    // getWeightBracket
+    /* Update Cart Object */
+    // updateShippingTotal
+    // updateTotalWeight
+    // updateSubtotal
+    // updateTotal
+    /* Update DOM */
+    // updateDOMItems
+    // updateDOMShipping
+    // updateDOMTotal
+    /* Errors and debugging */
+    // checkNaN
+    // sendGACartError
     this.getWeightBracket = function (totalWeight, weightBrackets) {
         //console.log(weightBrackets);
         if (weightBrackets.length < 2) {
@@ -58,14 +81,16 @@ function Cart(items) {
             }
             else {
                 // Find small parcel weight
+                var totalWeight = this.updateTotalWeight();
                 var weightBrackets = this.smallParcelWeights['region' + this.shippingRegion];
-                var weightBracket = this.getWeightBracket(this.totalWeight, weightBrackets);
+                var weightBracket = this.getWeightBracket(totalWeight, weightBrackets);
                 this.shippingTotal = this.smallParcelWeightMatrix['region' + this.shippingRegion][weightBracket];
             }
         }
         else {
             this.shippingTotal = 0;
         }
+        return this.shippingTotal;
     };
     this.updateTotalWeight = function () {
         var totalWeight = 0;
@@ -75,6 +100,7 @@ function Cart(items) {
             totalWeight += itemTotalWeight;
         }
         this.totalWeight = totalWeight;
+        return this.totalWeight;
     };
     this.updateSubtotal = function () {
         var subtotal = 0;
@@ -82,9 +108,11 @@ function Cart(items) {
             subtotal += this.items[i].total;
         }
         this.subtotal = subtotal;
+        return this.subtotal;
     };
     this.updateTotal = function () {
         this.total = this.shippingTotal + this.subtotal;
+        return this.total;
     };
     this.init = function () {
         if (items.length < 1) {
@@ -171,19 +199,6 @@ function Cart(items) {
             }.bind(this), false);
         }
     };
-    // add event listener to pay now / submit button
-    this.addPayNowBtnEventListener = function () {
-        // let el:HTMLElement = document.getElementById('quantity' + itemId);
-        // el.addEventListener('input', function(e): void {
-        // 	let el = e.target;
-        // 	let itemId:string = el.id.replace('quantity', ''); // TODO: improve this with data targets in HTML
-        // 	let quantity:number = parseInt(el.value);
-        // 	let item = this.getItem(itemId);
-        // 	item.quantity = quantity;
-        // 	this.updateDOMShipping();
-        // 	this.updateDOMTotal();
-        // }.bind(this), false );
-    };
     this.updateDOMItems = function () {
         for (var i = 0; i < this.items.length; i++) {
             // update cart items totals
@@ -191,7 +206,7 @@ function Cart(items) {
             var price = item.price;
             var quantity = item.quantity;
             var total = this.getItemTotal(price, quantity);
-            item.total = total;
+            item.total = this.checkNaN(total);
             // update total
             var el = document.getElementById('total' + item.id);
             if (el) {
@@ -201,23 +216,27 @@ function Cart(items) {
                 console.log('Error: Item total element not found.');
             }
         }
-        this.updateTotalWeight();
-        this.updateSubtotal();
-        var subtotal = this.subtotal;
+        this.updateTotalWeight(); // TODO: I don't think this is necessary and can be removed
+        var subtotal = this.updateSubtotal();
+        subtotal = this.checkNaN(subtotal);
         var subtotalEl = document.getElementById('totalSubTotal');
         subtotalEl.innerHTML = '£' + subtotal.toFixed(2);
     };
     this.updateDOMShipping = function (shippingRegion) {
-        this.updateShippingTotal();
-        var shippingTotal = this.shippingTotal;
+        var shippingTotal = this.updateShippingTotal();
+        shippingTotal = this.checkNaN(shippingTotal);
         var shippingTotalEl = document.getElementById('totalShippingTotal');
-        shippingTotalEl.innerHTML = '£' + shippingTotal.toFixed(2);
+        if (shippingTotalEl) {
+            shippingTotalEl.innerHTML = '£' + shippingTotal.toFixed(2);
+        }
     };
     this.updateDOMTotal = function () {
-        this.updateTotal();
-        var total = this.total;
+        var total = this.updateTotal();
+        total = this.checkNaN(total);
         var totalTotalEl = document.getElementById('totalTotal');
-        totalTotalEl.innerHTML = '£' + total.toFixed(2);
+        if (totalTotalEl) {
+            totalTotalEl.innerHTML = '£' + total.toFixed(2);
+        }
     };
     this.getItemTotal = function (price, quantity) {
         return price * quantity;
@@ -233,6 +252,21 @@ function Cart(items) {
             ;
         }
         return weightArrays;
+    };
+    this.checkNaN = function (variableName, number) {
+        if (isNaN(number)) {
+            var functionName = this.checkNaN.caller.name;
+            this.sendGACartError(functionName, variableName);
+            return 0;
+        }
+        return number;
+    };
+    this.sendGACartError = function (functionName, variableName) {
+        ga('send', 'event', {
+            'eventCategory': 'jsCart Error',
+            'eventAction': functionName,
+            'eventLabel': variableName
+        });
     };
 }
 /*

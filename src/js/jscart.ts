@@ -1,3 +1,5 @@
+declare var ga:any;
+
 interface CartItemInput {
 	id: string,
 	name: string,
@@ -36,6 +38,41 @@ function Cart(items: Array<CartItemInput>): void {
 		'region4': {'250': 5.60, '500': 8.70, '750': 11.40, '1000': 14.05, '1250': 15.85, '1500': 17.75, '1750': 19.60, '2000': 21.40, }
 	}
 
+	/* Initialization */
+
+	// init
+	// Item
+	// addQuantityEventListener
+	// addBuynowEventListener
+	// addShippingEventListener
+	// initialiseWeightArrays
+
+	/* Operations */
+
+	// getItem
+	// getItemTotal
+	// getWeightBracket
+
+	/* Update Cart Object */
+
+	// updateShippingTotal
+	// updateTotalWeight
+	// updateSubtotal
+	// updateTotal
+	
+	/* Update DOM */
+
+	// updateDOMItems
+	// updateDOMShipping
+	// updateDOMTotal
+	
+	/* Errors and debugging */
+
+	// checkNaN
+	// sendGACartError
+	
+
+
 	this.getWeightBracket = function(totalWeight:number, weightBrackets:number[]):number | boolean {
 		//console.log(weightBrackets);
 		if(weightBrackets.length < 2) {
@@ -61,7 +98,7 @@ function Cart(items: Array<CartItemInput>): void {
 		return false;
 	}
 	
-	this.updateShippingTotal = function():void {
+	this.updateShippingTotal = function():number {
 		if(this.shippingRegion == 1 || this.shippingRegion == 2 || this.shippingRegion == 3 || this.shippingRegion == 4) {
 			let AOCPaperback:CartItem = this.getItem('AOCPaperback');
 			let AOCAudioCD:CartItem = this.getItem('AOCAudioCD');
@@ -76,15 +113,17 @@ function Cart(items: Array<CartItemInput>): void {
 				this.shippingTotal = shippingTotal;
 			} else {
 				// Find small parcel weight
+				let totalWeight = this.updateTotalWeight();
 				let weightBrackets:number[] = this.smallParcelWeights['region'+this.shippingRegion];
-				let weightBracket = this.getWeightBracket(this.totalWeight, weightBrackets);
+				let weightBracket = this.getWeightBracket(totalWeight, weightBrackets);
 				this.shippingTotal = this.smallParcelWeightMatrix['region'+this.shippingRegion][weightBracket];
 			}
 		} else {
 			this.shippingTotal = 0;
 		}
+		return this.shippingTotal;
 	}
-	this.updateTotalWeight = function():void {
+	this.updateTotalWeight = function():number {
 		let totalWeight:number = 0;
 		for(let i:number = 0; i < this.items.length; i++) {
 			let item:CartItem = this.items[i];
@@ -92,16 +131,19 @@ function Cart(items: Array<CartItemInput>): void {
 			totalWeight += itemTotalWeight;
 		}
 		this.totalWeight = totalWeight;
+		return this.totalWeight;
 	}
-	this.updateSubtotal = function():void {
+	this.updateSubtotal = function():number {
 		let subtotal:number = 0;
 		for(let i:number = 0; i < this.items.length; i++) {
 			subtotal += this.items[i].total;
 		}
-		this.subtotal = subtotal;
+		this.subtotal = subtotal
+		return this.subtotal;
 	}
-	this.updateTotal = function():void {
+	this.updateTotal = function():number {
 		this.total = this.shippingTotal + this.subtotal;
+		return this.total;
 	}
 
 	this.init = function(): boolean {
@@ -199,22 +241,6 @@ function Cart(items: Array<CartItemInput>): void {
 		}
 	}
 
-		
-
-	// add event listener to pay now / submit button
-	this.addPayNowBtnEventListener = function() {
-		// let el:HTMLElement = document.getElementById('quantity' + itemId);
-		// el.addEventListener('input', function(e): void {
-		// 	let el = e.target;
-		// 	let itemId:string = el.id.replace('quantity', ''); // TODO: improve this with data targets in HTML
-		// 	let quantity:number = parseInt(el.value);
-		// 	let item = this.getItem(itemId);
-		// 	item.quantity = quantity;
-		// 	this.updateDOMShipping();
-		// 	this.updateDOMTotal();
-		// }.bind(this), false );
-	}
-
 	this.updateDOMItems = function():void {
 		for(let i = 0; i < this.items.length; i++) {
 			// update cart items totals
@@ -222,7 +248,7 @@ function Cart(items: Array<CartItemInput>): void {
 			let price:number = item.price;
 			let quantity:number = item.quantity;
 			let total:number = this.getItemTotal(price, quantity);
-			item.total = total;
+			item.total = this.checkNaN(total);
 
 			// update total
 			let el:HTMLElement = document.getElementById('total' + item.id);
@@ -232,25 +258,30 @@ function Cart(items: Array<CartItemInput>): void {
 				console.log('Error: Item total element not found.')
 			}
 		}
-		this.updateTotalWeight();
-		this.updateSubtotal();
-		let subtotal:number = this.subtotal;
+		this.updateTotalWeight(); // TODO: I don't think this is necessary and can be removed
+		
+		let subtotal:number = this.updateSubtotal();
+		subtotal = this.checkNaN(subtotal);
 		let subtotalEl:HTMLElement = document.getElementById('totalSubTotal');
 		subtotalEl.innerHTML = '£' + subtotal.toFixed(2);
 	}
 
 	this.updateDOMShipping = function(shippingRegion:number): void {
-		this.updateShippingTotal();
-		let shippingTotal:number = this.shippingTotal;
+		let shippingTotal:number = this.updateShippingTotal();
+		shippingTotal = this.checkNaN(shippingTotal);
 		let shippingTotalEl:HTMLElement = document.getElementById('totalShippingTotal');
-		shippingTotalEl.innerHTML = '£' + shippingTotal.toFixed(2);
+		if(shippingTotalEl) {
+			shippingTotalEl.innerHTML = '£' + shippingTotal.toFixed(2);
+		}
 	}
 
 	this.updateDOMTotal = function(): void {
-		this.updateTotal();
-		let total:number = this.total;
+		let total:number = this.updateTotal();
+		total = this.checkNaN(total);
 		let totalTotalEl:HTMLElement = document.getElementById('totalTotal');
-		totalTotalEl.innerHTML = '£' + total.toFixed(2);
+		if(totalTotalEl) {
+			totalTotalEl.innerHTML = '£' + total.toFixed(2);
+		}
 	}
 
 	this.getItemTotal = function(price: number, quantity: number):number {
@@ -267,6 +298,23 @@ function Cart(items: Array<CartItemInput>): void {
 			weightArrays[regionProperty] = weightArray.sort(function(a, b){return a - b});;
 		}
 		return weightArrays;
+	}
+
+	this.checkNaN = function(variableName:string, number:number):number {
+		if( isNaN(number) ) {
+			let functionName:string = this.checkNaN.caller.name;
+			this.sendGACartError(functionName, variableName);
+			return 0;
+		}
+		return number;
+	}
+
+	this.sendGACartError = function(functionName:string, variableName:string):void {
+		ga('send', 'event', {
+		  'eventCategory': 'jsCart Error',
+		  'eventAction': functionName,
+		  'eventLabel': variableName
+		});
 	}
 }
 /*

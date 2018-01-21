@@ -1,4 +1,3 @@
-console.log("test1");
 var cart;
 function initialiseCart() {
 	var i1 = { id: 'AOCPaperback', name: 'The Art of Changing', description: 'Paperback Book', price: 12.5, weight: 700 };
