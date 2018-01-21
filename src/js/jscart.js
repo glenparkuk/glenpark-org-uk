@@ -4,6 +4,7 @@ function Cart(items) {
     this.shippingTotal = 0;
     this.subtotal = 0;
     this.total = 0;
+    this.paypalActions = null;
     this.largeLetterPrices = {
         'region1': 2.52,
         'region2': 3.80,
@@ -23,6 +24,7 @@ function Cart(items) {
     // addBuynowEventListener
     // addShippingEventListener
     // initialiseWeightArrays
+    // setupValidation(paypalActions)
     /* Operations */
     // getItem
     // getItemTotal
@@ -37,6 +39,8 @@ function Cart(items) {
     // updateDOMShipping
     // updateDOMTotal
     /* Errors and debugging */
+    // isValid
+    // showValidationMessages
     // checkNaN
     // sendGACartError
     this.getWeightBracket = function (totalWeight, weightBrackets) {
@@ -151,15 +155,19 @@ function Cart(items) {
     this.addQuantityEventListener = function (itemId) {
         var el = document.getElementById('quantity' + itemId);
         el.addEventListener('input', function (e) {
-            var el = e.target;
-            var itemId = el.id.replace('quantity', ''); // TODO: improve this with data targets in HTML
-            var quantity = parseInt(el.value) || 0;
-            var item = this.getItem(itemId);
-            item.quantity = quantity;
-            this.updateDOMItems();
-            this.updateDOMShipping();
-            this.updateDOMTotal();
+            this.quantityEventListenerFnc(e);
         }.bind(this), false);
+    };
+    this.quantityEventListenerFnc = function (e) {
+        var el = e.target;
+        var itemId = el.id.replace('quantity', ''); // TODO: improve this with data targets in HTML
+        var quantity = parseInt(el.value) || 0;
+        var item = this.getItem(itemId);
+        item.quantity = quantity;
+        this.updateDOMItems();
+        this.updateDOMShipping();
+        this.updateDOMTotal();
+        this.isValid() ? this.paypalActions.enable() : this.paypalActions.disable();
     };
     // add event listeners to individual product buy now buttons
     this.addBuynowEventListener = function (itemId) {
@@ -180,6 +188,7 @@ function Cart(items) {
                 //let cartOffset:number = document.getElementById('buyNow').offsetTop;
                 //console.log(cartOffset);
                 window.scrollTo(0, 2650);
+                this.isValid() ? this.paypalActions.enable() : this.paypalActions.disable();
             }.bind(this), false);
         }
     };
@@ -195,6 +204,7 @@ function Cart(items) {
                     this.shippingRegion = shippingRegion;
                     this.updateDOMShipping();
                     this.updateDOMTotal();
+                    this.isValid() ? this.paypalActions.enable() : this.paypalActions.disable();
                 }
             }.bind(this), false);
         }
@@ -206,7 +216,7 @@ function Cart(items) {
             var price = item.price;
             var quantity = item.quantity;
             var total = this.getItemTotal(price, quantity);
-            item.total = this.checkNaN(total);
+            item.total = this.checkNaN(item.id + 'Total', total);
             // update total
             var el = document.getElementById('total' + item.id);
             if (el) {
@@ -218,13 +228,13 @@ function Cart(items) {
         }
         this.updateTotalWeight(); // TODO: I don't think this is necessary and can be removed
         var subtotal = this.updateSubtotal();
-        subtotal = this.checkNaN(subtotal);
+        subtotal = this.checkNaN('subtotal', subtotal);
         var subtotalEl = document.getElementById('totalSubTotal');
         subtotalEl.innerHTML = '£' + subtotal.toFixed(2);
     };
     this.updateDOMShipping = function (shippingRegion) {
         var shippingTotal = this.updateShippingTotal();
-        shippingTotal = this.checkNaN(shippingTotal);
+        shippingTotal = this.checkNaN('shippingTotal', shippingTotal);
         var shippingTotalEl = document.getElementById('totalShippingTotal');
         if (shippingTotalEl) {
             shippingTotalEl.innerHTML = '£' + shippingTotal.toFixed(2);
@@ -232,7 +242,7 @@ function Cart(items) {
     };
     this.updateDOMTotal = function () {
         var total = this.updateTotal();
-        total = this.checkNaN(total);
+        total = this.checkNaN('total', total);
         var totalTotalEl = document.getElementById('totalTotal');
         if (totalTotalEl) {
             totalTotalEl.innerHTML = '£' + total.toFixed(2);
@@ -253,20 +263,54 @@ function Cart(items) {
         }
         return weightArrays;
     };
+    this.isValid = function () {
+        var quantity = 0;
+        for (var i = 0; i < this.items.length; i++) {
+            quantity += this.items[i].quantity;
+        }
+        if (!(quantity > 0)) {
+            console.log("Items quantity not over 0");
+            return false;
+        }
+        if (!(this.subtotal > 0)) {
+            console.log("Subtotal not over 0");
+            return false;
+        }
+        if (!(this.shippingTotal > 0)) {
+            console.log("Shipping total not over 0");
+            return false;
+        }
+        if (this.shippingRegion != 1 && this.shippingRegion != 2 && this.shippingRegion != 3 && this.shippingRegion != 4) {
+            console.log("Please select a shipping country");
+            return false;
+        }
+        if (!(this.total > 0)) {
+            console.log("Sorry there has been an error");
+            return false;
+        }
+        return true;
+    };
     this.checkNaN = function (variableName, number) {
         if (isNaN(number)) {
-            var functionName = this.checkNaN.caller.name;
-            this.sendGACartError(functionName, variableName);
+            this.sendGACartError(variableName);
             return 0;
         }
         return number;
     };
-    this.sendGACartError = function (functionName, variableName) {
-        ga('send', 'event', {
+    this.sendGACartError = function (variableName) {
+        var gaObject = {
             'eventCategory': 'jsCart Error',
-            'eventAction': functionName,
-            'eventLabel': variableName
-        });
+            'eventAction': 'Update ' + variableName
+        };
+        console.log(gaObject);
+        ga('send', 'event', gaObject);
+    };
+    this.setupValidation = function (paypalActions) {
+        this.paypalActions = paypalActions;
+        this.paypalActions.disable();
+    };
+    this.showValidationMessages = function () {
+        this.isValid() ? this.paypalActions.enable() : this.paypalActions.disable();
     };
 }
 /*

@@ -24,6 +24,13 @@ function initialisePaypalExpressCheckout() {
             //color: 'blue',      // gold | blue | silver | black
             //tagline: false
         },
+        validate: function(actions) {
+        	cart.setupValidation(actions);
+        },
+
+        onClick: function() {
+        	cart.showValidationMessages();
+       	},
 
         // Pass the payment details for your transaction
         // See https://developer.paypal.com/docs/api/payments/#payment_create for the expected json parameters
