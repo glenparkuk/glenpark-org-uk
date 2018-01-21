@@ -299,7 +299,7 @@ function Cart(items) {
     };
     this.sendGACartError = function (variableName) {
         var gaObject = {
-            'eventCategory': 'jsCart Error',
+            'eventCategory': 'jsCart: NaN Error',
             'eventAction': 'Update ' + variableName
         };
         console.log(gaObject);

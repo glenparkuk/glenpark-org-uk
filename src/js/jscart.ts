@@ -352,7 +352,7 @@ function Cart(items: Array<CartItemInput>): void {
 
 	this.sendGACartError = function(variableName:string):void {
 		let gaObject:object = {
-		  'eventCategory': 'jsCart Error',
+		  'eventCategory': 'jsCart: NaN Error',
 		  'eventAction': 'Update ' + variableName
 		}
 		console.log(gaObject)
