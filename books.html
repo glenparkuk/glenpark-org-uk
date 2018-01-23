@@ -30,7 +30,14 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <link rel="stylesheet" href="css/glenpark.css" media="screen" />
 <link rel="stylesheet" href="css/style-lime.css" media="screen" />
 <!-- main css files end -->
-        
+
+<noscript>
+  <style>
+    .no-js {
+      display: block;
+    }
+  </style>
+</noscript>
         
 <!-- js calls begin -->
 <script type="text/javascript" src="js/jquery.min.js"></script>
@@ -465,7 +472,7 @@ or spiritual into muscular tension&rdquo;</h2>
   </div> -->
 
 <div class="checkout">
-
+<span class="no-js no-js-error-message">*Sorry, javascript must be enabled to purchase a product.</span>
 <form action="#">
   <fieldset class="items">
     <table >
@@ -501,6 +508,12 @@ or spiritual into muscular tension&rdquo;</h2>
           <td>
           <td colspan="1" class="totals-column" id="totalSubTotal">£0.00</td>
         </tr>
+        </tr>
+          <td colspan="2">
+              <span id="shippingCartInvalid" class="cart-error-message">*please add at least one item to the cart</span>
+          </td>
+          <td colspan="2" ></td>
+        <tr>
         <tr>
           <td colspan="4" class="shipping">
               <p>Please select your country</p>
@@ -510,6 +523,7 @@ or spiritual into muscular tension&rdquo;</h2>
                 <li><input type="radio" id="shippingAmericaCanadaAsia" name="shipping-region" value="3">America, South America, Canada and Asia</li>
                 <li><input type="radio" id="shippingWorld" name="shipping-region" value="4">Rest of World</li>
               </ul>
+              <span id="shippingTotalInvalid" class="shipping-error-message">*one shipping option must be selected</span>
           </td>
         </tr>
         <tr>
@@ -528,6 +542,11 @@ or spiritual into muscular tension&rdquo;</h2>
             <div id="paynowButton"></div>
           </td>
         </tr>
+          <tr>
+          <td colspan="4">
+             <span id="CartTotalInvalid" class="cart-error-message">*Sorry there has been an error. Please refresh your page or update your browser.</span>
+          </td>
+        </tr>       
       </tbody>
     </table>
   </fieldset>

@@ -29,7 +29,7 @@ function initialisePaypalExpressCheckout() {
         },
 
         onClick: function() {
-        	cart.showValidationMessages();
+        	cart.toggleValidationMessages();
        	},
 
         // Pass the payment details for your transaction

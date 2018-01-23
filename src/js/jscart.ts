@@ -71,8 +71,8 @@ function Cart(items: Array<CartItemInput>): void {
 	
 	/* Errors and debugging */
 
-	// isValid
-	// showValidationMessages
+	// isCartValid
+	// toggleValidationMessages
 	// checkNaN
 	// sendGACartError
 	
@@ -206,7 +206,7 @@ function Cart(items: Array<CartItemInput>): void {
 		this.updateDOMItems();
 		this.updateDOMShipping();
 		this.updateDOMTotal();
-		this.isValid() ? this.paypalActions.enable() : this.paypalActions.disable();
+		this.isCartValid() ? this.paypalActions.enable() : this.paypalActions.disable();
 	}
 
 	// add event listeners to individual product buy now buttons
@@ -229,7 +229,7 @@ function Cart(items: Array<CartItemInput>): void {
 				//let cartOffset:number = document.getElementById('buyNow').offsetTop;
 				//console.log(cartOffset);
 				window.scrollTo(0, 2650);
-				this.isValid() ? this.paypalActions.enable() : this.paypalActions.disable();
+				this.isCartValid() ? this.paypalActions.enable() : this.paypalActions.disable();
 			}.bind(this), false );
 		}
 	}
@@ -247,7 +247,7 @@ function Cart(items: Array<CartItemInput>): void {
 					this.shippingRegion = shippingRegion;
 					this.updateDOMShipping();
 					this.updateDOMTotal();
-					this.isValid() ? this.paypalActions.enable() : this.paypalActions.disable();
+					this.isCartValid() ? this.paypalActions.enable() : this.paypalActions.disable();
 				}
 			}.bind(this), false );
 		}
@@ -395,16 +395,19 @@ function Cart(items: Array<CartItemInput>): void {
 		this.paypalActions.disable();
 	}
 
-	this.showValidationMessages = function():void {
-		this.isValid() ? this.paypalActions.enable() : this.paypalActions.disable();
-		if( !this.isItemsQuantityValid() && !this.isSubtotalValid() ) {
-			// do something
-		}
-		if( !this.isShippingTotalValid() && !this.isShippingRegionValid() ) {
-			// do something
-		}
-		if( !this.isTotalValid() ) {
-			// do something
+	this.toggleValidationMessages = function():void {
+		if (!this.isCartValid()) {
+			this.paypalActions.enable();
+		} else {
+			if( !this.isItemsQuantityValid() || !this.isSubtotalValid() ) {
+				document.getElementById('shippingTotalInvalid').toggleClass('show-error');
+			}
+			if( !this.isShippingTotalValid() || !this.isShippingRegionValid() ) {
+				document.getElementById('shippingCartInvalid').toggleClass('show-error');;
+			}
+			if( !this.isTotalValid() ) {
+				document.getElementById('CartTotalInvalid').toggleClass('show-error');;
+			}
 		}
 	}
 }

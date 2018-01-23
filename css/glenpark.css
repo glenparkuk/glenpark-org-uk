@@ -894,7 +894,7 @@ div.checkout input.submit-btn {
 div.checkout td.shipping ul {
 	padding-left: 0;
 	/*border: 0.5px #d3d3d3 solid;*/
-	margin: 0;
+	margin: 0 0 20px;
 }
 
 div.checkout td.shipping ul li{
@@ -903,7 +903,22 @@ div.checkout td.shipping ul li{
 }
 
 
+span.cart-error-message, span.shipping-error-message, span.cart-error-message  {
+	color: #f00;
+	font-weight: bold;
+	display: block;
+	visibility: hidden;
+}
 
+.no-js-error-message {
+	color: #f00;
+	font-weight: bold;
+	display: none;
+}
+
+.show-error {
+	visibility: visible;
+}
 
 
 	
