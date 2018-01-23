@@ -263,7 +263,25 @@ function Cart(items) {
         }
         return weightArrays;
     };
-    this.isValid = function () {
+    this.isCartValid = function () {
+        if (!this.isItemsQuantityValid()) {
+            return false;
+        }
+        if (!this.isSubtotalValid()) {
+            return false;
+        }
+        if (!this.isShippingTotalValid()) {
+            return false;
+        }
+        if (!this.isShippingRegionValid()) {
+            return false;
+        }
+        if (!this.isTotalValid()) {
+            return false;
+        }
+        return true;
+    };
+    this.isItemsQuantityValid = function () {
         var quantity = 0;
         for (var i = 0; i < this.items.length; i++) {
             quantity += this.items[i].quantity;
@@ -272,18 +290,30 @@ function Cart(items) {
             console.log("Items quantity not over 0");
             return false;
         }
+        return true;
+    };
+    this.isSubtotalValid = function () {
         if (!(this.subtotal > 0)) {
             console.log("Subtotal not over 0");
             return false;
         }
+        return true;
+    };
+    this.isShippingTotalValid = function () {
         if (!(this.shippingTotal > 0)) {
             console.log("Shipping total not over 0");
             return false;
         }
+        return true;
+    };
+    this.isShippingRegionValid = function () {
         if (this.shippingRegion != 1 && this.shippingRegion != 2 && this.shippingRegion != 3 && this.shippingRegion != 4) {
             console.log("Please select a shipping country");
             return false;
         }
+        return true;
+    };
+    this.isTotalValid = function () {
         if (!(this.total > 0)) {
             console.log("Sorry there has been an error");
             return false;
@@ -311,6 +341,15 @@ function Cart(items) {
     };
     this.showValidationMessages = function () {
         this.isValid() ? this.paypalActions.enable() : this.paypalActions.disable();
+        if (!this.isItemsQuantityValid() && !this.isSubtotalValid()) {
+            // do something
+        }
+        if (!this.isShippingTotalValid() && !this.isShippingRegionValid()) {
+            // do something
+        }
+        if (!this.isTotalValid()) {
+            // do something
+        }
     };
 }
 /*
