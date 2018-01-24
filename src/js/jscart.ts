@@ -347,6 +347,7 @@ function Cart(items: Array<CartItemInput>): void {
 		if( !total ) {
 			if(itemsQuantity && subtotal && shippingRegion && shippingTotal) {
 				// send ga event}
+			}
 			return false;
 		}
 		return true;
@@ -397,16 +398,25 @@ function Cart(items: Array<CartItemInput>): void {
 
 	this.checkNaN = function(variableName:string, number:number):number {
 		if( isNaN(number) ) {
-			this.sendGACartError(variableName);
+			this.sendNaNError(variableName);
 			return 0;
 		}
 		return number;
 	}
 
-	this.sendGACartError = function(variableName:string):void {
+	this.sendNanError = function(variableName:string):void {
 		let gaObject:object = {
 		  'eventCategory': 'jsCart: NaN Error',
 		  'eventAction': 'Update ' + variableName
+		}
+		console.log(gaObject)
+		ga('send', 'event', gaObject);
+	}
+
+	this.sendDependencyCheckError = function(variableName:string):void {
+		let gaObject:object = {
+		  'eventCategory': 'jsCart: Dependency Check Error',
+		  'eventAction': variableName + ' invalid: unexpected validity in dependencies'
 		}
 		console.log(gaObject)
 		ga('send', 'event', gaObject);
