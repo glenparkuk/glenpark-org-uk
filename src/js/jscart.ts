@@ -313,20 +313,40 @@ function Cart(items: Array<CartItemInput>): void {
 	}
 
 	this.isCartValid = function():boolean {
-		
-		if( !this.isItemsQuantityValid() ) {
+		let itemsQuantity:boolean = this.isItemsQuantityValid();
+		let subtotal:boolean = this.isSubtotalValid();
+		let shippingTotal:boolean = this.isShippingTotalValid();
+		let shippingRegion:boolean = this.isShippingRegionValid();
+		let total:boolean = this.isTotalValid();
+
+		if( !itemsQuantity ) {
+			if(subtotal) {
+				// send ga event
+			}
 			return false;
 		}
-		if( !this.isSubtotalValid() ) {
+		if( !subtotal ) {
+			if(itemsQuantity) {
+				// send ga event
+			}
 			return false;
 		}
-		if( !this.isShippingTotalValid() ) {
+		if( !shippingRegion ) {
+			// following check is very unlikely
+			if(shippingTotal && itemsQuantity && subtotal) {
+				// send ga event
+			}
 			return false;
 		}
-		if( !this.isShippingRegionValid() ) {
+		if( !shippingTotal ) {
+			if(shippingRegion && itemsQuantity && subtotal) {
+				// send ga event
+			}
 			return false;
 		}
-		if( !this.isTotalValid() ) {
+		if( !total ) {
+			if(itemsQuantity && subtotal && shippingRegion && shippingTotal) {
+				// send ga event}
 			return false;
 		}
 		return true;
