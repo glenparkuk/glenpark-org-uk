@@ -432,29 +432,35 @@ function Cart(items: Array<CartItemInput>): void {
 		if (this.isCartValid()) {
 			this.paypalActions.enable();
 		} else {
-			let shippingCartInvalid = document.getElementById('shippingCartInvalid'),
+			let cartItemsInvalid = document.getElementById('cartItemsInvalid'),
 				shippingTotalInvalid = document.getElementById('shippingTotalInvalid'),
 				CartTotalInvalid = document.getElementById('CartTotalInvalid'),
 
-				shippingCartErrorActive = shippingCartInvalid.classList.contains('show-error'),
+				shippingCartErrorActive = cartItemsInvalid.classList.contains('show-error'),
 				shippingTotalErrorActive = shippingTotalInvalid.classList.contains('show-error'),
-				CartTotalErrorActive = CartTotalInvalid.classList.contains('show-error');
+				CartTotalErrorActive = CartTotalInvalid.classList.contains('show-error'),
+
+				itemsQuantity:boolean = this.isItemsQuantityValid(),
+				subtotal:boolean = this.isSubtotalValid(),
+				shippingTotal:boolean = this.isShippingTotalValid(),
+				shippingRegion:boolean = this.isShippingRegionValid(),
+				total:boolean = this.isTotalValid();
 			
 
-			if( !this.isItemsQuantityValid() || !this.isSubtotalValid() ) {
+			if( !itemsQuantity || !subtotal ) {
 
 				if (!shippingCartErrorActive) {
 
-				shippingCartInvalid.classList.add("show-error");
+				cartItemsInvalid.classList.add("show-error");
 
 				}
 
 			} else if (shippingCartErrorActive) {
 
-				shippingCartInvalid.classList.remove("show-error");
+				cartItemsInvalid.classList.remove("show-error");
 			}
 
-			if( !this.isShippingTotalValid() || !this.isShippingRegionValid() ) {
+			if( !shippingTotal || !shippingRegion ) {
 
 				if (!shippingTotalErrorActive) {
 
@@ -467,11 +473,11 @@ function Cart(items: Array<CartItemInput>): void {
 				shippingTotalInvalid.classList.remove("show-error");
 			}
 
-			// if( !this.isTotalValid() ){
+			if( ( itemsQuantity || subtotal || shippingTotal || shippingRegion ) && !this.isTotalValid() ) {
 
-			// 	CartTotalInvalid.classList.add("show-error");
+				CartTotalInvalid.classList.add("show-error");
 
-			// }
+			}
 		}
 	}
 	this.enablePaypalButton = function():void {

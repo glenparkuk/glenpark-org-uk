@@ -188,7 +188,7 @@ function Cart(items) {
                 //let cartOffset:number = document.getElementById('buyNow').offsetTop;
                 //console.log(cartOffset);
                 window.scrollTo(0, 2650);
-                this.isCartValid() ? this.paypalActions.enable() : this.paypalActions.disable();
+                this.isCartValid() ? this.enablePaypalButton() : this.disablePaypalButton();
             }.bind(this), false);
         }
     };
@@ -264,19 +264,40 @@ function Cart(items) {
         return weightArrays;
     };
     this.isCartValid = function () {
-        if (!this.isItemsQuantityValid()) {
+        var itemsQuantity = this.isItemsQuantityValid();
+        var subtotal = this.isSubtotalValid();
+        var shippingTotal = this.isShippingTotalValid();
+        var shippingRegion = this.isShippingRegionValid();
+        var total = this.isTotalValid();
+        if (!itemsQuantity) {
+            if (subtotal) {
+                // send ga event
+            }
             return false;
         }
-        if (!this.isSubtotalValid()) {
+        if (!subtotal) {
+            if (itemsQuantity) {
+                // send ga event
+            }
             return false;
         }
-        if (!this.isShippingTotalValid()) {
+        if (!shippingRegion) {
+            // following check is very unlikely
+            if (shippingTotal && itemsQuantity && subtotal) {
+                // send ga event
+            }
             return false;
         }
-        if (!this.isShippingRegionValid()) {
+        if (!shippingTotal) {
+            if (shippingRegion && itemsQuantity && subtotal) {
+                // send ga event
+            }
             return false;
         }
-        if (!this.isTotalValid()) {
+        if (!total) {
+            if (itemsQuantity && subtotal && shippingRegion && shippingTotal) {
+                // send ga event}
+            }
             return false;
         }
         return true;
@@ -324,15 +345,23 @@ function Cart(items) {
     };
     this.checkNaN = function (variableName, number) {
         if (isNaN(number)) {
-            this.sendGACartError(variableName);
+            this.sendNaNError(variableName);
             return 0;
         }
         return number;
     };
-    this.sendGACartError = function (variableName) {
+    this.sendNanError = function (variableName) {
         var gaObject = {
             'eventCategory': 'jsCart: NaN Error',
             'eventAction': 'Update ' + variableName
+        };
+        console.log(gaObject);
+        ga('send', 'event', gaObject);
+    };
+    this.sendDependencyCheckError = function (variableName) {
+        var gaObject = {
+            'eventCategory': 'jsCart: Dependency Check Error',
+            'eventAction': variableName + ' invalid: unexpected validity in dependencies'
         };
         console.log(gaObject);
         ga('send', 'event', gaObject);
@@ -346,18 +375,16 @@ function Cart(items) {
             this.paypalActions.enable();
         }
         else {
-            var shippingCartInvalid = document.getElementById('shippingCartInvalid'), shippingTotalInvalid = document.getElementById('shippingTotalInvalid'), CartTotalInvalid = document.getElementById('CartTotalInvalid'), shippingCartErrorActive = shippingCartInvalid.classList.contains('show-error'), shippingTotalErrorActive = shippingTotalInvalid.classList.contains('show-error'), CartTotalErrorActive = CartTotalInvalid.classList.contains('show-error');
-            if (!this.isItemsQuantityValid() || !this.isSubtotalValid()) {
+            var cartItemsInvalid = document.getElementById('cartItemsInvalid'), shippingTotalInvalid = document.getElementById('shippingTotalInvalid'), CartTotalInvalid = document.getElementById('CartTotalInvalid'), shippingCartErrorActive = cartItemsInvalid.classList.contains('show-error'), shippingTotalErrorActive = shippingTotalInvalid.classList.contains('show-error'), CartTotalErrorActive = CartTotalInvalid.classList.contains('show-error'), itemsQuantity = this.isItemsQuantityValid(), subtotal = this.isSubtotalValid(), shippingTotal = this.isShippingTotalValid(), shippingRegion = this.isShippingRegionValid(), total = this.isTotalValid();
+            if (!itemsQuantity || !subtotal) {
                 if (!shippingCartErrorActive) {
-                    shippingCartInvalid.classList.add("show-error");
+                    cartItemsInvalid.classList.add("show-error");
                 }
             }
             else if (shippingCartErrorActive) {
-                shippingCartInvalid.classList.remove("show-error");
+                cartItemsInvalid.classList.remove("show-error");
             }
-            console.log(this.isShippingTotalValid());
-            console.log(this.isShippingRegionValid());
-            if (!this.isShippingTotalValid() || !this.isShippingRegionValid()) {
+            if (!shippingTotal || !shippingRegion) {
                 if (!shippingTotalErrorActive) {
                     shippingTotalInvalid.classList.add("show-error");
                 }
@@ -365,9 +392,9 @@ function Cart(items) {
             else if (shippingTotalErrorActive) {
                 shippingTotalInvalid.classList.remove("show-error");
             }
-            // if( !this.isTotalValid() ){
-            // 	CartTotalInvalid.classList.add("show-error");
-            // }
+            if ((itemsQuantity || subtotal || shippingTotal || shippingRegion) && !this.isTotalValid()) {
+                CartTotalInvalid.classList.add("show-error");
+            }
         }
     };
     this.enablePaypalButton = function () {
