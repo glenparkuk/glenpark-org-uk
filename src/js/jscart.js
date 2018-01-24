@@ -39,8 +39,8 @@ function Cart(items) {
     // updateDOMShipping
     // updateDOMTotal
     /* Errors and debugging */
-    // isValid
-    // showValidationMessages
+    // isCartValid
+    // toggleValidationMessages
     // checkNaN
     // sendGACartError
     this.getWeightBracket = function (totalWeight, weightBrackets) {
@@ -167,7 +167,7 @@ function Cart(items) {
         this.updateDOMItems();
         this.updateDOMShipping();
         this.updateDOMTotal();
-        this.isValid() ? this.paypalActions.enable() : this.paypalActions.disable();
+        this.isCartValid() ? this.enablePaypalButton() : this.disablePaypalButton();
     };
     // add event listeners to individual product buy now buttons
     this.addBuynowEventListener = function (itemId) {
@@ -188,7 +188,7 @@ function Cart(items) {
                 //let cartOffset:number = document.getElementById('buyNow').offsetTop;
                 //console.log(cartOffset);
                 window.scrollTo(0, 2650);
-                this.isValid() ? this.paypalActions.enable() : this.paypalActions.disable();
+                this.isCartValid() ? this.paypalActions.enable() : this.paypalActions.disable();
             }.bind(this), false);
         }
     };
@@ -204,7 +204,7 @@ function Cart(items) {
                     this.shippingRegion = shippingRegion;
                     this.updateDOMShipping();
                     this.updateDOMTotal();
-                    this.isValid() ? this.paypalActions.enable() : this.paypalActions.disable();
+                    this.isCartValid() ? this.enablePaypalButton() : this.disablePaypalButton();
                 }
             }.bind(this), false);
         }
@@ -300,9 +300,11 @@ function Cart(items) {
         return true;
     };
     this.isShippingTotalValid = function () {
-        if (!(this.shippingTotal > 0)) {
-            console.log("Shipping total not over 0");
-            return false;
+        if (this.isItemsQuantityValid()) {
+            if (!(this.shippingTotal > 0)) {
+                console.log("Shipping total not over 0");
+                return false;
+            }
         }
         return true;
     };
@@ -339,16 +341,47 @@ function Cart(items) {
         this.paypalActions = paypalActions;
         this.paypalActions.disable();
     };
-    this.showValidationMessages = function () {
-        this.isValid() ? this.paypalActions.enable() : this.paypalActions.disable();
-        if (!this.isItemsQuantityValid() && !this.isSubtotalValid()) {
-            // do something
+    this.toggleValidationMessages = function () {
+        if (this.isCartValid()) {
+            this.paypalActions.enable();
         }
-        if (!this.isShippingTotalValid() && !this.isShippingRegionValid()) {
-            // do something
+        else {
+            var shippingCartInvalid = document.getElementById('shippingCartInvalid'), shippingTotalInvalid = document.getElementById('shippingTotalInvalid'), CartTotalInvalid = document.getElementById('CartTotalInvalid'), shippingCartErrorActive = shippingCartInvalid.classList.contains('show-error'), shippingTotalErrorActive = shippingTotalInvalid.classList.contains('show-error'), CartTotalErrorActive = CartTotalInvalid.classList.contains('show-error');
+            if (!this.isItemsQuantityValid() || !this.isSubtotalValid()) {
+                if (!shippingCartErrorActive) {
+                    shippingCartInvalid.classList.add("show-error");
+                }
+            }
+            else if (shippingCartErrorActive) {
+                shippingCartInvalid.classList.remove("show-error");
+            }
+            console.log(this.isShippingTotalValid());
+            console.log(this.isShippingRegionValid());
+            if (!this.isShippingTotalValid() || !this.isShippingRegionValid()) {
+                if (!shippingTotalErrorActive) {
+                    shippingTotalInvalid.classList.add("show-error");
+                }
+            }
+            else if (shippingTotalErrorActive) {
+                shippingTotalInvalid.classList.remove("show-error");
+            }
+            // if( !this.isTotalValid() ){
+            // 	CartTotalInvalid.classList.add("show-error");
+            // }
         }
-        if (!this.isTotalValid()) {
-            // do something
+    };
+    this.enablePaypalButton = function () {
+        var paypalButtom = document.getElementById('paynowButton'), paypalButtonInactive = paypalButtom.classList.contains('disabled');
+        this.paypalActions.enable();
+        if (paypalButtonInactive) {
+            paypalButtom.classList.remove("disabled");
+        }
+    };
+    this.disablePaypalButton = function () {
+        var paypalButtom = document.getElementById('paynowButton'), paypalButtonInactive = paypalButtom.classList.contains('disabled');
+        this.paypalActions.disable();
+        if (!paypalButtonInactive) {
+            paypalButtom.classList.add("disabled");
         }
     };
 }

@@ -917,7 +917,11 @@ span.cart-error-message, span.shipping-error-message, span.cart-error-message  {
 }
 
 .show-error {
-	visibility: visible;
+	visibility: visible !important;
+}
+
+#paynowButton.disabled {
+	opacity: 0.4;
 }
 
 

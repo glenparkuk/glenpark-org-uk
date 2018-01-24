@@ -206,7 +206,7 @@ function Cart(items: Array<CartItemInput>): void {
 		this.updateDOMItems();
 		this.updateDOMShipping();
 		this.updateDOMTotal();
-		this.isCartValid() ? this.paypalActions.enable() : this.paypalActions.disable();
+		this.isCartValid() ? this.enablePaypalButton() : this.disablePaypalButton();
 	}
 
 	// add event listeners to individual product buy now buttons
@@ -229,7 +229,7 @@ function Cart(items: Array<CartItemInput>): void {
 				//let cartOffset:number = document.getElementById('buyNow').offsetTop;
 				//console.log(cartOffset);
 				window.scrollTo(0, 2650);
-				this.isCartValid() ? this.paypalActions.enable() : this.paypalActions.disable();
+				this.isCartValid() ? this.enablePaypalButton() : this.disablePaypalButton();
 			}.bind(this), false );
 		}
 	}
@@ -247,7 +247,7 @@ function Cart(items: Array<CartItemInput>): void {
 					this.shippingRegion = shippingRegion;
 					this.updateDOMShipping();
 					this.updateDOMTotal();
-					this.isCartValid() ? this.paypalActions.enable() : this.paypalActions.disable();
+					this.isCartValid() ? this.enablePaypalButton() : this.disablePaypalButton();
 				}
 			}.bind(this), false );
 		}
@@ -352,12 +352,14 @@ function Cart(items: Array<CartItemInput>): void {
 		return true;
 	}
 	this.isShippingTotalValid = function():boolean {
-		if(!(this.shippingTotal > 0)) {
-			console.log("Shipping total not over 0");
-			return false;
+		if(this.isItemsQuantityValid()) {
+			if(!(this.shippingTotal > 0)) {
+				console.log("Shipping total not over 0");
+				return false;
+			}
 		}
-		return true;
-	}
+			return true;
+		}
 	this.isShippingRegionValid = function():boolean {
 		if(this.shippingRegion != 1 && this.shippingRegion != 2 && this.shippingRegion != 3 && this.shippingRegion != 4 ) {
 			console.log("Please select a shipping country");
@@ -396,19 +398,74 @@ function Cart(items: Array<CartItemInput>): void {
 	}
 
 	this.toggleValidationMessages = function():void {
-		if (!this.isCartValid()) {
+
+		if (this.isCartValid()) {
 			this.paypalActions.enable();
 		} else {
+			let shippingCartInvalid = document.getElementById('shippingCartInvalid'),
+				shippingTotalInvalid = document.getElementById('shippingTotalInvalid'),
+				CartTotalInvalid = document.getElementById('CartTotalInvalid'),
+
+				shippingCartErrorActive = shippingCartInvalid.classList.contains('show-error'),
+				shippingTotalErrorActive = shippingTotalInvalid.classList.contains('show-error'),
+				CartTotalErrorActive = CartTotalInvalid.classList.contains('show-error');
+			
+
 			if( !this.isItemsQuantityValid() || !this.isSubtotalValid() ) {
-				document.getElementById('shippingTotalInvalid').toggleClass('show-error');
+
+				if (!shippingCartErrorActive) {
+
+				shippingCartInvalid.classList.add("show-error");
+
+				}
+
+			} else if (shippingCartErrorActive) {
+
+				shippingCartInvalid.classList.remove("show-error");
 			}
+
 			if( !this.isShippingTotalValid() || !this.isShippingRegionValid() ) {
-				document.getElementById('shippingCartInvalid').toggleClass('show-error');;
+
+				if (!shippingTotalErrorActive) {
+
+					shippingTotalInvalid.classList.add("show-error");
+
+				}
+
+			} else if (shippingTotalErrorActive) {
+
+				shippingTotalInvalid.classList.remove("show-error");
 			}
-			if( !this.isTotalValid() ) {
-				document.getElementById('CartTotalInvalid').toggleClass('show-error');;
-			}
+
+			// if( !this.isTotalValid() ){
+
+			// 	CartTotalInvalid.classList.add("show-error");
+
+			// }
 		}
+	}
+	this.enablePaypalButton = function():void {
+
+		let paypalButtom = document.getElementById('paynowButton'),
+			paypalButtonInactive = paypalButtom.classList.contains('disabled');
+
+			this.paypalActions.enable();
+
+			if (paypalButtonInactive) {
+				paypalButtom.classList.remove("disabled");
+			}
+	}
+
+	this.disablePaypalButton = function():void {
+
+		let paypalButtom = document.getElementById('paynowButton'),
+			paypalButtonInactive = paypalButtom.classList.contains('disabled');
+
+			this.paypalActions.disable();
+
+			if (!paypalButtonInactive) {
+				paypalButtom.classList.add("disabled");
+			} 
 	}
 }
 /*
