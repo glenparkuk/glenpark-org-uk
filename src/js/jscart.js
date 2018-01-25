@@ -345,7 +345,7 @@ function Cart(items) {
     };
     this.checkNaN = function (variableName, number) {
         if (isNaN(number)) {
-            this.sendNaNError(variableName);
+            this.sendNanError(variableName);
             return 0;
         }
         return number;
