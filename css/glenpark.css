@@ -815,6 +815,18 @@ position: relative;
 }
 
 
+
+.submit-btn {
+	background: #4da6ff;
+    color: white;
+    border-radius: 5px;
+    padding: 5px 10px;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+
+
 /* Checkout Form Styles */
 
 div.checkout {
@@ -924,5 +936,13 @@ span.cart-error-message, span.shipping-error-message, span.cart-error-message  {
 	opacity: 0.4;
 }
 
+#paymentSuccessful {
+	text-align: center;
+	font-size: 16px;
+}
+
+#paymentSuccessful.disabled {
+	visibility: hidden;
+}
 
 	
