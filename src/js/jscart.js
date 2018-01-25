@@ -392,7 +392,7 @@ function Cart(items) {
             else if (shippingTotalErrorActive) {
                 shippingTotalInvalid.classList.remove("show-error");
             }
-            if ((itemsQuantity || subtotal || shippingTotal || shippingRegion) && !this.isTotalValid()) {
+            if (itemsQuantity && subtotal && shippingTotal & shippingRegion && !this.isTotalValid()) {
                 cartTotalInvalid.classList.add("show-error");
             }
         }
