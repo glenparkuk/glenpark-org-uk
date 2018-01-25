@@ -271,32 +271,32 @@ function Cart(items) {
         var total = this.isTotalValid();
         if (!itemsQuantity) {
             if (subtotal) {
-                // send ga event
+                this.sendIsCartValidError(itemsQuantity);
             }
             return false;
         }
         if (!subtotal) {
             if (itemsQuantity) {
-                // send ga event
+                this.sendIsCartValidError(subtotal);
             }
             return false;
         }
         if (!shippingRegion) {
             // following check is very unlikely
             if (shippingTotal && itemsQuantity && subtotal) {
-                // send ga event
+                this.sendIsCartValidError(shippingRegion);
             }
             return false;
         }
         if (!shippingTotal) {
             if (shippingRegion && itemsQuantity && subtotal) {
-                // send ga event
+                this.sendIsCartValidError(shippingTotal);
             }
             return false;
         }
         if (!total) {
             if (itemsQuantity && subtotal && shippingRegion && shippingTotal) {
-                // send ga event}
+                this.sendIsCartValidError(total);
             }
             return false;
         }
@@ -358,10 +358,10 @@ function Cart(items) {
         console.log(gaObject);
         ga('send', 'event', gaObject);
     };
-    this.sendDependencyCheckError = function (variableName) {
+    this.sendIsCartValidError = function (variableName) {
         var gaObject = {
-            'eventCategory': 'jsCart: Dependency Check Error',
-            'eventAction': variableName + ' invalid: unexpected validity in dependencies'
+            'eventCategory': 'jsCart: isCartValid Error',
+            'eventAction': 'Unexpected validity checking ' + variableName + ' dependencies'
         };
         console.log(gaObject);
         ga('send', 'event', gaObject);

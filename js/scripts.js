@@ -10,11 +10,11 @@ function initialiseCart() {
 
 function initialisePaypalExpressCheckout() {
 	paypal.Button.render({
-        env: 'sandbox',
+        env: 'production',
 
         client: {
-            sandbox:    'Af-ScnK1c8h5X3JeNRqcmGhbUAMToEHgVXtUsz1-TewphtVbc-vFYp158a2HqYktQVCJ6mtEu5nTveJS',
-            //production: 'Af-ScnK1c8h5X3JeNRqcmGhbUAMToEHgVXtUsz1-TewphtVbc-vFYp158a2HqYktQVCJ6mtEu5nTveJS'  // from https://developer.paypal.com/developer/applications/
+            //sandbox:    'Af-ScnK1c8h5X3JeNRqcmGhbUAMToEHgVXtUsz1-TewphtVbc-vFYp158a2HqYktQVCJ6mtEu5nTveJS',
+            production: 'AUnjUMWqjyoWJ6p67mWMGGw1iNH0hri-3uEal6O_sFzztfJM9dP2F6g7KojHIxYj4oI2GEpmRqmGFJDz'  // from https://developer.paypal.com/developer/applications/
         },
 
         style: {
