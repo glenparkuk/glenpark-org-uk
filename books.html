@@ -30,7 +30,14 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <link rel="stylesheet" href="css/glenpark.css" media="screen" />
 <link rel="stylesheet" href="css/style-lime.css" media="screen" />
 <!-- main css files end -->
-        
+
+<noscript>
+  <style>
+    .no-js {
+      display: block;
+    }
+  </style>
+</noscript>
         
 <!-- js calls begin -->
 <script type="text/javascript" src="js/jquery.min.js"></script>
@@ -325,12 +332,7 @@ or spiritual into muscular tension&rdquo;</h2>
 <div class="paypalbtn">
 <h4 style="float:left"><strong>Buy <em>The Art of Changing</em></strong></h4>
 <div style="float:left;padding:10px 0 0 20px;">
-<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
-<input type="hidden" name="cmd" value="_s-xclick">
-<input type="hidden" name="hosted_button_id" value="JGBGRAA3RVQAA">
-<input type="image" src="https://www.paypalobjects.com/en_GB/i/btn/btn_buynow_LG.gif" border="0" name="submit" alt="PayPal – The safer, easier way to pay online!">
-<img alt="" border="0" src="https://www.paypalobjects.com/en_GB/i/scr/pixel.gif" width="1" height="1">
-</form>
+<input class="submit-btn" id="buynowAOCPaperback" type="submit" value="Buy Now"></input>
 
 </div>
 </div>
@@ -389,12 +391,7 @@ or spiritual into muscular tension&rdquo;</h2>
 <div class="paypalbtn">
 <h4 style="float:left"><strong>Buy <em>The Art of Changing CD</em></strong></h4>
 <div style="float:left;padding:10px 0 0 20px;">
-<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
-<input type="hidden" name="cmd" value="_s-xclick">
-<input type="hidden" name="hosted_button_id" value="PNSD42SEPBLU2">
-<input type="image" src="https://www.paypalobjects.com/en_GB/i/btn/btn_buynow_LG.gif" border="0" name="submit" alt="PayPal – The safer, easier way to pay online.">
-<img alt="" border="0" src="https://www.paypalobjects.com/en_GB/i/scr/pixel.gif" width="1" height="1">
-</form>
+<input class="submit-btn" id="buynowAOCAudioCD" type="submit" value="Buy Now"></input>
 </div>
 <br /><br /><br />
 <p>Buy multiple items and save on postage - <a href="#multiple-items">see below</a></p>
@@ -442,12 +439,7 @@ or spiritual into muscular tension&rdquo;</h2>
 <div class="paypalbtn">
 <h4 style="float:left"><strong>Buy <em>An Interview with Peggy Williams</em></strong></h4>
 <div style="float:left;padding:10px 0 0 20px;">
-<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
-<input type="hidden" name="cmd" value="_s-xclick">
-<input type="hidden" name="hosted_button_id" value="BL3GT5QQKLFX4">
-<input type="image" src="https://www.paypalobjects.com/en_GB/i/btn/btn_buynow_LG.gif" border="0" name="submit" alt="PayPal – The safer, easier way to pay online.">
-<img alt="" border="0" src="https://www.paypalobjects.com/en_GB/i/scr/pixel.gif" width="1" height="1">
-</form>
+<input class="submit-btn" id="buynowPWPamphlet" type="submit" value="Buy Now"></input>
 </div>
 <br /><br /><br />
 <p>Buy multiple items and save on postage - <a href="#multiple-items">see below</a></p>
@@ -463,14 +455,14 @@ or spiritual into muscular tension&rdquo;</h2>
 <br /><br />
 <hr>
 
-<p><span class="boldsubtitle">Buy Now</span></p>
+<p id="buyNow"><span class="boldsubtitle">Buy Now</span></p>
 
   <!-- <div style="float:left;">
   <p>Buy multiple items and save on postage.</p>
   </div> -->
 
 <div class="checkout">
-
+<span class="no-js no-js-error-message">*Sorry, javascript must be enabled to purchase a product.</span>
 <form action="#">
   <fieldset class="items">
     <table >
@@ -486,55 +478,71 @@ or spiritual into muscular tension&rdquo;</h2>
         <tr>
           <td>The Art of Changing paperback</td>
           <td class="price-column">£12.50</td>
-          <td class="quantity-column"><input type="number" min="0" value="0" placeholder="0" max="10" name="quantity-aoc-paperback" required /></td>
+          <td class="quantity-column"><input type="number" min="0" value="0" placeholder="0" max="10" name="quantity-aoc-paperback" id="quantityAOCPaperback" required /></td>
+          <td class="totals-column" id="totalAOCPaperback">£0.00</td>
         </tr>
         <tr>
           <td>The Art of Changing - Audio CD</td>
           <td class="price-column">£10.00</td>
-          <td class="quantity-column"><input type="number" min="0" value="0" placeholder="0" max="10" name="quantity-aoc-paperback" required /></td>
+          <td class="quantity-column"><input type="number" min="0" value="0" placeholder="0" max="10" name="quantity-aoc-paperback" id="quantityAOCAudioCD" required /></td>
+          <td class="totals-column" id="totalAOCAudioCD">£0.00</td>
         </tr>
         <tr>
           <td>Peggy Williams Pamphlet</td>
           <td class="price-column">£2.50</td>
-          <td class="quantity-column"><input type="number" min="0" value="0" placeholder="0" max="10" name="quantity-aoc-paperback" required /></td>
+          <td class="quantity-column"><input type="number" min="0" value="0" placeholder="0" max="10" name="quantity-aoc-paperback" id="quantityPWPamphlet" required /></td>
+          <td class="totals-column" id="totalPWPamphlet">£0.00</td>
         </tr>
         <tr>
           <td colspan="2" class="price-column">Subtotal</td>
           <td>
-          <td colspan="1" class="totals-column">£XXX</td>
+          <td colspan="1" class="totals-column" id="totalSubTotal">£0.00</td>
         </tr>
+        </tr>
+          <td colspan="2">
+              <span id="cartItemsInvalid" class="cart-error-message">*please add at least one item to the cart</span>
+          </td>
+          <td colspan="2" ></td>
+        <tr>
         <tr>
           <td colspan="4" class="shipping">
               <p>Please select your country</p>
-              <ul>
-                <!-- <input type="radio" name="" value="Please select your country"></option> -->
-                <li><input type="radio" id="" name="shipping">United Kingdom</option></li>
-                <li><input type="radio" name="shipping">Europe</option></li>
-                <li><input type="radio" name="shipping">America, South America, Canada and Asia</option></li>
-                <li><input type="radio" name="shipping">Rest of World</option></li>
+              <ul id="shippingOptions">
+                <li><input type="radio" id="shippingUnitedKingdon" name="shipping-region" value="1">United Kingdom</li>
+                <li><input type="radio" id="shippingEurope" name="shipping-region" value="2">Europe</li>
+                <li><input type="radio" id="shippingAmericaCanadaAsia" name="shipping-region" value="3">America, South America, Canada and Asia</li>
+                <li><input type="radio" id="shippingWorld" name="shipping-region" value="4">Rest of World</li>
               </ul>
+              <span id="shippingTotalInvalid" class="shipping-error-message">*one shipping option must be selected</span>
           </td>
         </tr>
         <tr>
           <td colspan="2" class="price-column">Postage &amp; Packaging</td>
           <td></td>
-          <td colspan="1" class="totals-column">£2.50</td>
+          <td colspan="1" class="totals-column" id="totalShippingTotal">£0.00</td>
         </tr>
         <tr>
           <td colspan="2" class="price-column">Total</td>
           <td></td>
-          <td colspan="1" class="totals-column">£XXX</td>
+          <td colspan="1" class="totals-column" id="totalTotal">£0.00</td>
         </tr>
         <tr>
           <td colspan="3"></td>
-          <td colspan="1" class="totals-column"><input class="submit-btn" type="submit"></input></td>
+          <td colspan="1" class="totals-column">
+            <div id="paynowButton" class="disabled"></div>
+          </td>
         </tr>
+          <tr>
+          <td colspan="4">
+             <span id="cartTotalInvalid" class="cart-error-message">*Sorry there has been an error. Please refresh your page or update your browser.</span>
+          </td>
+        </tr>       
       </tbody>
     </table>
   </fieldset>
   
 </form>
-
+<p id="paymentSuccessful" class="disabled">Thank you for your purchase!</p>
 <!-- <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
 <input type="hidden" name="cmd" value="_s-xclick">
 <input type="hidden" name="hosted_button_id" value="3MKLVBT7VJ3XQ">
@@ -719,10 +727,30 @@ Select Country
 </div>
 <!-- footer2 container ends -->
 
+<div id="paypalExpressCheckout"></div>
+<div id="jsCartScript"></div>
+<script type="text/javascript">
+  var paypalTag = document.createElement('script');
+  paypalTag.src = "https://www.paypalobjects.com/api/checkout.js";
+  paypalTag.setAttribute('data-version-4', '');
+  paypalTag.addEventListener("load", function() {
+    initialisePaypalExpressCheckout();
+  });
 
+  var jsCartTag = document.createElement('script');
+  jsCartTag.src = "./src/js/jscart.js";
+  jsCartTag.addEventListener("load", function() {
+    initialiseCart();
 
+    var paypalCheckoutScriptEl = document.getElementById('paypalExpressCheckout');
+    paypalCheckoutScriptEl.parentNode.insertBefore(paypalTag, paypalCheckoutScriptEl);
+    paypalCheckoutScriptEl.parentNode.removeChild(paypalCheckoutScriptEl);
+  });
 
-
+  var jsCartScriptEl = document.getElementById('jsCartScript');
+  jsCartScriptEl.parentNode.insertBefore(jsCartTag, jsCartScriptEl);
+  jsCartScriptEl.parentNode.removeChild(jsCartScriptEl);
+</script>
 
 </body>
 </html>
