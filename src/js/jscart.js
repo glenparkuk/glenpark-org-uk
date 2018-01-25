@@ -78,7 +78,7 @@ function Cart(items) {
                 // Sanity check
                 this.shippingTotal = 0;
             }
-            else if (AOCAudioCD.quantity == 1 && AOCPaperback.quantity == 0 && PWPamphlet.quantity < 6) {
+            else if (AOCAudioCD.quantity < 2 && AOCPaperback.quantity == 0 && PWPamphlet.quantity < 6) {
                 // Custom: if only 1 CD user large letter prices
                 var shippingTotal = this.largeLetterPrices['region' + this.shippingRegion];
                 this.shippingTotal = shippingTotal;
@@ -392,7 +392,7 @@ function Cart(items) {
             else if (shippingTotalErrorActive) {
                 shippingTotalInvalid.classList.remove("show-error");
             }
-            if (itemsQuantity && subtotal && shippingTotal & shippingRegion && !this.isTotalValid()) {
+            if (itemsQuantity && subtotal && shippingTotal && shippingRegion && !this.isTotalValid()) {
                 cartTotalInvalid.classList.add("show-error");
             }
         }
@@ -414,6 +414,10 @@ function Cart(items) {
         if (!paypalButtonInactive) {
             paypalButtom.classList.add("disabled");
         }
+    };
+    this.paymentSuccessful = function () {
+        var el = document.getElementById('paymentSuccessful');
+        el.classList.remove("disabled");
     };
 }
 /*

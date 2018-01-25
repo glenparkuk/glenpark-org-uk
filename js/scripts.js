@@ -14,7 +14,7 @@ function initialisePaypalExpressCheckout() {
 
         client: {
             //sandbox:    'Af-ScnK1c8h5X3JeNRqcmGhbUAMToEHgVXtUsz1-TewphtVbc-vFYp158a2HqYktQVCJ6mtEu5nTveJS',
-            production: 'AUnjUMWqjyoWJ6p67mWMGGw1iNH0hri-3uEal6O_sFzztfJM9dP2F6g7KojHIxYj4oI2GEpmRqmGFJDz'  // from https://developer.paypal.com/developer/applications/
+            production: 'AR8Pj1qgSvC_pNVKL-CNsmay2U8Hphc_6nS3MLYHPNHqTT1_2KN99izL-ajj2_XPphnJm7mDhQJMts0e'  // from https://developer.paypal.com/developer/applications/
         },
 
         style: {
@@ -86,7 +86,11 @@ function initialisePaypalExpressCheckout() {
 
         // Pass a function to be called when the customer completes the payment
         onAuthorize: function(data, actions) {
-            console.log('The payment was authorized!');
+            return actions.payment.execute().then(function(payment) {
+
+                // The payment is complete!
+                // You can now show a confirmation message to the customer
+            });
 
         },
 
