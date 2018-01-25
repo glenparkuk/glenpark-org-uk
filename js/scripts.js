@@ -87,7 +87,7 @@ function initialisePaypalExpressCheckout() {
         // Pass a function to be called when the customer completes the payment
         onAuthorize: function(data, actions) {
             return actions.payment.execute().then(function(payment) {
-
+            	cart.paymentSuccessful();
                 // The payment is complete!
                 // You can now show a confirmation message to the customer
             });
