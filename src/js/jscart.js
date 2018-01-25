@@ -368,14 +368,17 @@ function Cart(items) {
     };
     this.setupValidation = function (paypalActions) {
         this.paypalActions = paypalActions;
-        this.paypalActions.disable();
+        this.disablePaypalButton();
     };
     this.toggleValidationMessages = function () {
+        var cartItemsInvalid = document.getElementById('cartItemsInvalid'), shippingTotalInvalid = document.getElementById('shippingTotalInvalid'), cartTotalInvalid = document.getElementById('cartTotalInvalid'), shippingCartErrorActive = cartItemsInvalid.classList.contains('show-error'), shippingTotalErrorActive = shippingTotalInvalid.classList.contains('show-error'), cartTotalErrorActive = cartTotalInvalid.classList.contains('show-error'), itemsQuantity = this.isItemsQuantityValid(), subtotal = this.isSubtotalValid(), shippingTotal = this.isShippingTotalValid(), shippingRegion = this.isShippingRegionValid(), total = this.isTotalValid();
         if (this.isCartValid()) {
-            this.paypalActions.enable();
+            cartItemsInvalid.classList.remove("show-error");
+            shippingTotalInvalid.classList.remove("show-error");
+            cartTotalInvalid.classList.remove("show-error");
+            this.enablePaypalButton();
         }
         else {
-            var cartItemsInvalid = document.getElementById('cartItemsInvalid'), shippingTotalInvalid = document.getElementById('shippingTotalInvalid'), cartTotalInvalid = document.getElementById('cartTotalInvalid'), shippingCartErrorActive = cartItemsInvalid.classList.contains('show-error'), shippingTotalErrorActive = shippingTotalInvalid.classList.contains('show-error'), cartTotalErrorActive = cartTotalInvalid.classList.contains('show-error'), itemsQuantity = this.isItemsQuantityValid(), subtotal = this.isSubtotalValid(), shippingTotal = this.isShippingTotalValid(), shippingRegion = this.isShippingRegionValid(), total = this.isTotalValid();
             if (!itemsQuantity || !subtotal) {
                 if (!shippingCartErrorActive) {
                     cartItemsInvalid.classList.add("show-error");
@@ -400,10 +403,15 @@ function Cart(items) {
     this.enablePaypalButton = function () {
         var paypalButtom = document.getElementById('paynowButton'), paypalButtonInactive = paypalButtom.classList.contains('disabled');
         this.paypalActions.enable();
-        var cartItemsInvalid = document.getElementById('cartItemsInvalid'), shippingTotalInvalid = document.getElementById('shippingTotalInvalid'), cartTotalInvalid = document.getElementById('cartTotalInvalid'), shippingCartErrorActive = cartItemsInvalid.classList.contains('show-error'), shippingTotalErrorActive = shippingTotalInvalid.classList.contains('show-error'), CartTotalErrorActive = cartTotalInvalid.classList.contains('show-error');
-        cartItemsInvalid.classList.remove("show-error");
-        shippingTotalInvalid.classList.remove("show-error");
-        cartTotalInvalid.classList.remove("show-error");
+        // let cartItemsInvalid = document.getElementById('cartItemsInvalid'),
+        // 	shippingTotalInvalid = document.getElementById('shippingTotalInvalid'),
+        // 	cartTotalInvalid = document.getElementById('cartTotalInvalid'),
+        // 	shippingCartErrorActive = cartItemsInvalid.classList.contains('show-error'),
+        // 	shippingTotalErrorActive = shippingTotalInvalid.classList.contains('show-error'),
+        // 	CartTotalErrorActive = cartTotalInvalid.classList.contains('show-error');
+        // 	cartItemsInvalid.classList.remove("show-error");
+        // 	shippingTotalInvalid.classList.remove("show-error");
+        // 	cartTotalInvalid.classList.remove("show-error");
         if (paypalButtonInactive) {
             paypalButtom.classList.remove("disabled");
         }

@@ -424,28 +424,34 @@ function Cart(items: Array<CartItemInput>): void {
 
 	this.setupValidation = function(paypalActions:object):void {
 		this.paypalActions = paypalActions;
-		this.paypalActions.disable();
+		this.disablePaypalButton();
 	}
 
 	this.toggleValidationMessages = function():void {
 
+		let cartItemsInvalid = document.getElementById('cartItemsInvalid'),
+			shippingTotalInvalid = document.getElementById('shippingTotalInvalid'),
+			cartTotalInvalid = document.getElementById('cartTotalInvalid'),
+
+			shippingCartErrorActive = cartItemsInvalid.classList.contains('show-error'),
+			shippingTotalErrorActive = shippingTotalInvalid.classList.contains('show-error'),
+			cartTotalErrorActive = cartTotalInvalid.classList.contains('show-error'),
+
+			itemsQuantity:boolean = this.isItemsQuantityValid(),
+			subtotal:boolean = this.isSubtotalValid(),
+			shippingTotal:boolean = this.isShippingTotalValid(),
+			shippingRegion:boolean = this.isShippingRegionValid(),
+			total:boolean = this.isTotalValid();
+
 		if (this.isCartValid()) {
-			this.paypalActions.enable();
-		} else {
-			let cartItemsInvalid = document.getElementById('cartItemsInvalid'),
-				shippingTotalInvalid = document.getElementById('shippingTotalInvalid'),
-				cartTotalInvalid = document.getElementById('cartTotalInvalid'),
 
-				shippingCartErrorActive = cartItemsInvalid.classList.contains('show-error'),
-				shippingTotalErrorActive = shippingTotalInvalid.classList.contains('show-error'),
-				cartTotalErrorActive = cartTotalInvalid.classList.contains('show-error'),
+			cartItemsInvalid.classList.remove("show-error");
+			shippingTotalInvalid.classList.remove("show-error");
+			cartTotalInvalid.classList.remove("show-error");
 
-				itemsQuantity:boolean = this.isItemsQuantityValid(),
-				subtotal:boolean = this.isSubtotalValid(),
-				shippingTotal:boolean = this.isShippingTotalValid(),
-				shippingRegion:boolean = this.isShippingRegionValid(),
-				total:boolean = this.isTotalValid();
-			
+			this.enablePaypalButton();
+		
+		} else {	
 
 			if( !itemsQuantity || !subtotal ) {
 				
@@ -487,17 +493,17 @@ function Cart(items: Array<CartItemInput>): void {
 
 			this.paypalActions.enable();
 
-			let cartItemsInvalid = document.getElementById('cartItemsInvalid'),
-				shippingTotalInvalid = document.getElementById('shippingTotalInvalid'),
-				cartTotalInvalid = document.getElementById('cartTotalInvalid'),
+			// let cartItemsInvalid = document.getElementById('cartItemsInvalid'),
+			// 	shippingTotalInvalid = document.getElementById('shippingTotalInvalid'),
+			// 	cartTotalInvalid = document.getElementById('cartTotalInvalid'),
 
-				shippingCartErrorActive = cartItemsInvalid.classList.contains('show-error'),
-				shippingTotalErrorActive = shippingTotalInvalid.classList.contains('show-error'),
-				CartTotalErrorActive = cartTotalInvalid.classList.contains('show-error');
+			// 	shippingCartErrorActive = cartItemsInvalid.classList.contains('show-error'),
+			// 	shippingTotalErrorActive = shippingTotalInvalid.classList.contains('show-error'),
+			// 	CartTotalErrorActive = cartTotalInvalid.classList.contains('show-error');
 
-				cartItemsInvalid.classList.remove("show-error");
-				shippingTotalInvalid.classList.remove("show-error");
-				cartTotalInvalid.classList.remove("show-error");
+			// 	cartItemsInvalid.classList.remove("show-error");
+			// 	shippingTotalInvalid.classList.remove("show-error");
+			// 	cartTotalInvalid.classList.remove("show-error");
 
 			if (paypalButtonInactive) {
 				paypalButtom.classList.remove("disabled");
