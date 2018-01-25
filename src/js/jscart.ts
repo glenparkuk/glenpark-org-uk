@@ -493,6 +493,7 @@ function Cart(items: Array<CartItemInput>): void {
 
 			this.paypalActions.enable();
 
+			// TODO: Setup Function to remove error messages on event handlers
 			// let cartItemsInvalid = document.getElementById('cartItemsInvalid'),
 			// 	shippingTotalInvalid = document.getElementById('shippingTotalInvalid'),
 			// 	cartTotalInvalid = document.getElementById('cartTotalInvalid'),
