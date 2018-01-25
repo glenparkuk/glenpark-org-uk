@@ -112,7 +112,7 @@ function Cart(items: Array<CartItemInput>): void {
 			if( AOCAudioCD.quantity < 1 && AOCPaperback.quantity < 1 && PWPamphlet.quantity < 1 ) {
 				// Sanity check
 				this.shippingTotal = 0;
-			} else if ( AOCAudioCD.quantity == 1 && AOCPaperback.quantity == 0 && PWPamphlet.quantity < 6 ) {
+			} else if ( AOCAudioCD.quantity < 2 && AOCPaperback.quantity == 0 && PWPamphlet.quantity < 6 ) {
 				// Custom: if only 1 CD user large letter prices
 				let shippingTotal:number = this.largeLetterPrices['region' + this.shippingRegion]
 				this.shippingTotal = shippingTotal;
@@ -514,6 +514,11 @@ function Cart(items: Array<CartItemInput>): void {
 			if (!paypalButtonInactive) {
 				paypalButtom.classList.add("disabled");
 			} 
+	}
+
+	this.paymentSuccessful = function():void {
+		let el:HTMLElement = document.getElementById('paymentSuccessful');
+		el.classList.remove("disabled");
 	}
 }
 /*
