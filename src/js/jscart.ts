@@ -192,7 +192,7 @@ function Cart(items: Array<CartItemInput>): void {
 
 	this.addQuantityEventListener = function(itemId: string) {
 		let el:HTMLElement = document.getElementById('quantity' + itemId);
-		el.addEventListener('input', function(e) {
+		el.addEventListener('change', function(e) {
 			this.quantityEventListenerFnc(e);
 		}.bind(this), false );
 	}
@@ -214,6 +214,10 @@ function Cart(items: Array<CartItemInput>): void {
 		let el:HTMLElement = document.getElementById('buynow' + itemId);
 		if(el) {
 			el.addEventListener('click', function(e): void {
+				//
+				// Disabled because events aren't firing from programmatic updates to inputs
+				//
+				/*
 				let el = e.target;
 				let itemId:string = el.id.replace('buynow', ''); // TODO: improve this with data targets in HTML
 				let item = this.getItem(itemId);
@@ -228,8 +232,9 @@ function Cart(items: Array<CartItemInput>): void {
 
 				//let cartOffset:number = document.getElementById('buyNow').offsetTop;
 				//console.log(cartOffset);
+				*/
 				window.scrollTo(0, 2650);
-				this.isCartValid() ? this.enablePaypalButton() : this.disablePaypalButton();
+				//this.isCartValid() ? this.enablePaypalButton() : this.disablePaypalButton();
 			}.bind(this), false );
 		}
 	}

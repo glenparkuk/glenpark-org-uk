@@ -154,7 +154,7 @@ function Cart(items) {
     };
     this.addQuantityEventListener = function (itemId) {
         var el = document.getElementById('quantity' + itemId);
-        el.addEventListener('input', function (e) {
+        el.addEventListener('change', function (e) {
             this.quantityEventListenerFnc(e);
         }.bind(this), false);
     };
@@ -174,21 +174,27 @@ function Cart(items) {
         var el = document.getElementById('buynow' + itemId);
         if (el) {
             el.addEventListener('click', function (e) {
-                var el = e.target;
-                var itemId = el.id.replace('buynow', ''); // TODO: improve this with data targets in HTML
-                var item = this.getItem(itemId);
+                //
+                // Disabled because events aren't firing from programmatic updates to inputs
+                //
+                /*
+                let el = e.target;
+                let itemId:string = el.id.replace('buynow', ''); // TODO: improve this with data targets in HTML
+                let item = this.getItem(itemId);
                 item.quantity++;
-                var quantityEl = document.getElementById('quantity' + item.id);
-                if (quantityEl) {
+                
+                let quantityEl:HTMLInputElement = (<HTMLInputElement>document.getElementById('quantity' + item.id));
+                if(quantityEl) {
                     quantityEl.value = item.quantity;
+                } else {
+                    console.log('Error: Item total element not found.')
                 }
-                else {
-                    console.log('Error: Item total element not found.');
-                }
+
                 //let cartOffset:number = document.getElementById('buyNow').offsetTop;
                 //console.log(cartOffset);
+                */
                 window.scrollTo(0, 2650);
-                this.isCartValid() ? this.enablePaypalButton() : this.disablePaypalButton();
+                //this.isCartValid() ? this.enablePaypalButton() : this.disablePaypalButton();
             }.bind(this), false);
         }
     };
@@ -403,6 +409,7 @@ function Cart(items) {
     this.enablePaypalButton = function () {
         var paypalButtom = document.getElementById('paynowButton'), paypalButtonInactive = paypalButtom.classList.contains('disabled');
         this.paypalActions.enable();
+        // TODO: Setup Function to remove error messages on event handlers
         // let cartItemsInvalid = document.getElementById('cartItemsInvalid'),
         // 	shippingTotalInvalid = document.getElementById('shippingTotalInvalid'),
         // 	cartTotalInvalid = document.getElementById('cartTotalInvalid'),
