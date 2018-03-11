@@ -1,0 +1,34 @@
+{
+  "name": "glen_park_uk",
+  "version": "1.0.0",
+  "description": "HTML, CSS, JS for the glenpark.org.uk",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Sass",
+    "Git",
+    "Gulp",
+    "JSON"
+  ],
+  "author": "Park-Kennaby",
+  "license": "ISC",
+  "devDependencies": {
+    "gulp": "*",
+    "gulp-autoprefixer": "*",
+    "gulp-clean": "*",
+    "gulp-concat": "*",
+    "gulp-cssnano": "*",
+    "gulp-jshint": "*",
+    "gulp-plumber": "*",
+    "gulp-sass": "*",
+    "gulp-sourcemaps": "*",
+    "gulp-svgmin": "*",
+    "gulp-svgstore": "*",
+    "gulp-uglify": "*",
+    "gulp-watch": "*",
+    "jshint": "*",
+    "jshint-stylish": "*"
+  },
+}
