@@ -214,6 +214,8 @@ function Cart(items: Array<CartItemInput>): void {
 		let el:HTMLElement = document.getElementById('buynow' + itemId);
 		if(el) {
 			el.addEventListener('click', function(e): void {
+				let itemId:string = e.target.id;
+				this.sendBuyNowButtonOnClickEvent(itemId);
 				//
 				// Disabled because events aren't firing from programmatic updates to inputs
 				//
@@ -326,32 +328,32 @@ function Cart(items: Array<CartItemInput>): void {
 
 		if( !itemsQuantity ) {
 			if(subtotal) {
-				this.sendIsCartValidError(itemsQuantity);
+				this.sendIsCartValidErrorEvent('itemsQuantity');
 			}
 			return false;
 		}
 		if( !subtotal ) {
 			if(itemsQuantity) {
-				this.sendIsCartValidError(subtotal);
+				this.sendIsCartValidErrorEvent('subtotal');
 			}
 			return false;
 		}
 		if( !shippingRegion ) {
 			// following check is very unlikely
 			if(shippingTotal && itemsQuantity && subtotal) {
-				this.sendIsCartValidError(shippingRegion);
+				this.sendIsCartValidErrorEvent('shippingRegion');
 			}
 			return false;
 		}
 		if( !shippingTotal ) {
 			if(shippingRegion && itemsQuantity && subtotal) {
-				this.sendIsCartValidError(shippingTotal);
+				this.sendIsCartValidErrorEvent('shippingTotal');
 			}
 			return false;
 		}
 		if( !total ) {
 			if(itemsQuantity && subtotal && shippingRegion && shippingTotal) {
-				this.sendIsCartValidError(total);
+				this.sendIsCartValidErrorEvent('total');
 			}
 			return false;
 		}
@@ -403,27 +405,36 @@ function Cart(items: Array<CartItemInput>): void {
 
 	this.checkNaN = function(variableName:string, number:number):number {
 		if( isNaN(number) ) {
-			this.sendNanError(variableName);
+			this.sendNanErrorEvent(variableName);
 			return 0;
 		}
 		return number;
 	}
 
-	this.sendNanError = function(variableName:string):void {
+	this.sendNanErrorEvent = function(variableName:string):void {
 		let gaObject:object = {
 		  'eventCategory': 'jsCart: NaN Error',
 		  'eventAction': 'Update ' + variableName
 		}
-		console.log(gaObject)
+		//console.log(gaObject)
 		ga('send', 'event', gaObject);
 	}
 
-	this.sendIsCartValidError = function(variableName:string):void {
+	this.sendIsCartValidErrorEvent = function(variableName:string):void {
 		let gaObject:object = {
 		  'eventCategory': 'jsCart: isCartValid Error',
 		  'eventAction': 'Unexpected validity checking ' + variableName + ' dependencies'
 		}
-		console.log(gaObject)
+		//console.log(gaObject)
+		ga('send', 'event', gaObject);
+	}
+
+	this.sendBuyNowButtonOnClickEvent = function(variableName:string):void {
+		let gaObject:object = {
+		  'eventCategory': 'jsCart: Buy Now onClick event',
+		  'eventAction': variableName + ' Buy Now button onClick'
+		}
+		//console.log(gaObject)
 		ga('send', 'event', gaObject);
 	}
 
