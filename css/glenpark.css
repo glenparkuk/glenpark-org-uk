@@ -815,7 +815,6 @@ position: relative;
 }
 
 
-
 .submit-btn {
 	background: #4da6ff;
     color: white;
@@ -843,6 +842,7 @@ div.checkout table {
 	width: 100%;
 	border-spacing: 0;
 	font-size: 13px;
+	border-collapse: collapse;
 }
 
 div.checkout table thead {
@@ -868,13 +868,21 @@ div.checkout table th.last-table-header {
 	border-bottom-right-radius: 5px;
 }
 
-div.checkout table tr {
-	border-bottom: 1px solid #999999;
+div.checkout table tr.item {
+	/*border-bottom: 0.5px #e5e0e0 solid;*/
 }
 
 div.checkout table td {
 	text-align:left;
 	padding: 5px;
+}
+
+div.checkout table tr.item td {
+	padding: 10px 5px;
+}
+
+div.checkout table tr.sub-total td {
+	padding: 10px 5px;
 }
 
 div.checkout table tr .price-column {
@@ -886,6 +894,7 @@ div.checkout table tr .quantity-column {
 
 div.checkout table tr .totals-column {
 	text-align: center;
+	width: 188px;
 }
 
 div.checkout div.totals {
@@ -910,6 +919,24 @@ div.checkout td.shipping ul {
 }
 
 div.checkout td.shipping ul li{
+	display: flex;
+	align-items: center;
+	border-bottom: 0.5px #b3b3b3b3 solid;
+	padding: 6px;
+	line-height: 1em;
+	padding: 10px 0;
+}
+
+div.checkout td.shipping ul input{
+	margin: 0 8px;
+	line-height: 1em;
+}
+
+div.checkout td.shipping ul span{
+	margin-top: 2px;
+}
+
+div.checkout td.shipping ul li input{
 	border-bottom: 0.5px #b3b3b3b3 solid;
 	padding: 6px;
 }
