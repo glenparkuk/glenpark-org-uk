@@ -174,6 +174,8 @@ function Cart(items) {
         var el = document.getElementById('buynow' + itemId);
         if (el) {
             el.addEventListener('click', function (e) {
+                var itemId = e.target.id;
+                this.sendBuyNowButtonOnClickEvent(itemId);
                 //
                 // Disabled because events aren't firing from programmatic updates to inputs
                 //
@@ -277,32 +279,32 @@ function Cart(items) {
         var total = this.isTotalValid();
         if (!itemsQuantity) {
             if (subtotal) {
-                this.sendIsCartValidError(itemsQuantity);
+                this.sendIsCartValidErrorEvent('itemsQuantity');
             }
             return false;
         }
         if (!subtotal) {
             if (itemsQuantity) {
-                this.sendIsCartValidError(subtotal);
+                this.sendIsCartValidErrorEvent('subtotal');
             }
             return false;
         }
         if (!shippingRegion) {
             // following check is very unlikely
             if (shippingTotal && itemsQuantity && subtotal) {
-                this.sendIsCartValidError(shippingRegion);
+                this.sendIsCartValidErrorEvent('shippingRegion');
             }
             return false;
         }
         if (!shippingTotal) {
             if (shippingRegion && itemsQuantity && subtotal) {
-                this.sendIsCartValidError(shippingTotal);
+                this.sendIsCartValidErrorEvent('shippingTotal');
             }
             return false;
         }
         if (!total) {
             if (itemsQuantity && subtotal && shippingRegion && shippingTotal) {
-                this.sendIsCartValidError(total);
+                this.sendIsCartValidErrorEvent('total');
             }
             return false;
         }
@@ -351,12 +353,12 @@ function Cart(items) {
     };
     this.checkNaN = function (variableName, number) {
         if (isNaN(number)) {
-            this.sendNanError(variableName);
+            this.sendNanErrorEvent(variableName);
             return 0;
         }
         return number;
     };
-    this.sendNanError = function (variableName) {
+    this.sendNanErrorEvent = function (variableName) {
         var gaObject = {
             'eventCategory': 'jsCart: NaN Error',
             'eventAction': 'Update ' + variableName
@@ -364,10 +366,18 @@ function Cart(items) {
         console.log(gaObject);
         ga('send', 'event', gaObject);
     };
-    this.sendIsCartValidError = function (variableName) {
+    this.sendIsCartValidErrorEvent = function (variableName) {
         var gaObject = {
             'eventCategory': 'jsCart: isCartValid Error',
             'eventAction': 'Unexpected validity checking ' + variableName + ' dependencies'
+        };
+        console.log(gaObject);
+        ga('send', 'event', gaObject);
+    };
+    this.sendBuyNowButtonOnClickEvent = function (variableName) {
+        var gaObject = {
+            'eventCategory': 'jsCart: Buy Now onClick event',
+            'eventAction': variableName + ' Buy Now button onClick'
         };
         console.log(gaObject);
         ga('send', 'event', gaObject);
