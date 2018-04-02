@@ -104,6 +104,21 @@ $(document).ready(function(){
 		//goto that anchor by setting the body scroll top to anchor top
 		$('html, body').animate({scrollTop:target_top}, 500);
 	});
+
+
+
+  $(".scroll-buy-now").click(function(event){
+    //prevent the default action for the click event
+    event.preventDefault();
+
+    //get the top offset of the target anchor
+    var target_offset = $("#buyNow").offset();
+    var target_top = target_offset.top;
+
+    //goto that anchor by setting the body scroll top to anchor top
+    $('html, body').animate({scrollTop:target_top}, 1000);
+  });
+
 });
 </script>
 <!-- toplink script begins -->
@@ -333,7 +348,7 @@ or spiritual into muscular tension&rdquo;</h2>
 <div class="paypalbtn">
 <h4 style="float:left"><strong>Buy <em>The Art of Changing</em></strong></h4>
 <div style="float:left;padding:10px 0 0 20px;">
-<input class="submit-btn" id="buynowAOCPaperback" type="submit" value="Buy Now"></input>
+<input class="submit-btn scroll-buy-now" id="buynowAOCPaperback" type="submit" value="Buy Now"></input>
 </div>
 </div>
 </div>
@@ -391,7 +406,7 @@ or spiritual into muscular tension&rdquo;</h2>
 <div class="paypalbtn">
 <h4 style="float:left"><strong>Buy <em>The Art of Changing CD</em></strong></h4>
 <div style="float:left;padding:10px 0 0 20px;">
-<input class="submit-btn" id="buynowAOCAudioCD" type="submit" value="Buy Now"></input>
+<input class="submit-btn scroll-buy-now" id="buynowAOCAudioCD" type="submit" value="Buy Now"></input>
 </div>
 <br /><br /><br />
 <!-- <p>Buy multiple items and save on postage - <a href="#multiple-items">see below</a></p> -->
@@ -438,7 +453,8 @@ or spiritual into muscular tension&rdquo;</h2>
 <div class="paypalbtn">
 <h4 style="float:left"><strong>Buy <em>An Interview with Peggy Williams</em></strong></h4>
 <div style="float:left;padding:10px 0 0 20px;">
-<input class="submit-btn" id="buynowPWPamphlet" type="submit" value="Buy Now"></input>
+
+<input class="submit-btn scroll-buy-now" id="buynowPWPamphlet" type="submit" value="Buy Now"></input>
 </div>
 <div class="clear"></div>
 <br>
