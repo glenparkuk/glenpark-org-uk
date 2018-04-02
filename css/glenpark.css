@@ -910,6 +910,24 @@ div.checkout td.shipping ul {
 }
 
 div.checkout td.shipping ul li{
+	display: flex;
+	align-items: center;
+	border-bottom: 0.5px #b3b3b3b3 solid;
+	padding: 6px;
+	line-height: 1em;
+	padding: 10px 0;
+}
+
+div.checkout td.shipping ul input{
+	margin: 0 8px;
+	line-height: 1em;
+}
+
+div.checkout td.shipping ul span{
+	margin-top: 2px;
+}
+
+div.checkout td.shipping ul li input{
 	border-bottom: 0.5px #b3b3b3b3 solid;
 	padding: 6px;
 }
