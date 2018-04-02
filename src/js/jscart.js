@@ -363,7 +363,7 @@ function Cart(items) {
             'eventCategory': 'jsCart: NaN Error',
             'eventAction': 'Update ' + variableName
         };
-        console.log(gaObject);
+        //console.log(gaObject)
         ga('send', 'event', gaObject);
     };
     this.sendIsCartValidErrorEvent = function (variableName) {
@@ -371,7 +371,7 @@ function Cart(items) {
             'eventCategory': 'jsCart: isCartValid Error',
             'eventAction': 'Unexpected validity checking ' + variableName + ' dependencies'
         };
-        console.log(gaObject);
+        //console.log(gaObject)
         ga('send', 'event', gaObject);
     };
     this.sendBuyNowButtonOnClickEvent = function (variableName) {
@@ -379,7 +379,7 @@ function Cart(items) {
             'eventCategory': 'jsCart: Buy Now onClick event',
             'eventAction': variableName + ' Buy Now button onClick'
         };
-        console.log(gaObject);
+        //console.log(gaObject)
         ga('send', 'event', gaObject);
     };
     this.setupValidation = function (paypalActions) {
