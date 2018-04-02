@@ -235,7 +235,7 @@ function Cart(items: Array<CartItemInput>): void {
 				//let cartOffset:number = document.getElementById('buyNow').offsetTop;
 				//console.log(cartOffset);
 				*/
-				window.scrollTo(0, 2650);
+				//window.scrollTo(0, 2650);
 				//this.isCartValid() ? this.enablePaypalButton() : this.disablePaypalButton();
 			}.bind(this), false );
 		}
