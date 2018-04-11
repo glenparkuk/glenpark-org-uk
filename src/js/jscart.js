@@ -360,27 +360,36 @@ function Cart(items) {
     };
     this.sendNanErrorEvent = function (variableName) {
         var gaObject = {
+            'event': 'GAEvent',
             'eventCategory': 'jsCart: NaN Error',
-            'eventAction': 'Update ' + variableName
+            'eventAction': 'Update ' + variableName,
+            'eventLabel': undefined,
+            'eventValue': undefined
         };
         //console.log(gaObject)
-        ga('send', 'event', gaObject);
+        dataLayer.push(gaObject);
     };
     this.sendIsCartValidErrorEvent = function (variableName) {
         var gaObject = {
+            'event': 'GAEvent',
             'eventCategory': 'jsCart: isCartValid Error',
-            'eventAction': 'Unexpected validity checking ' + variableName + ' dependencies'
+            'eventAction': 'Unexpected validity checking ' + variableName + ' dependencies',
+            'eventLabel': undefined,
+            'eventValue': undefined
         };
         //console.log(gaObject)
-        ga('send', 'event', gaObject);
+        dataLayer.push(gaObject);
     };
     this.sendBuyNowButtonOnClickEvent = function (variableName) {
         var gaObject = {
+            'event': 'GAEvent',
             'eventCategory': 'jsCart: Buy Now onClick event',
-            'eventAction': variableName + ' Buy Now button onClick'
+            'eventAction': variableName + ' Buy Now button onClick',
+            'eventLabel': undefined,
+            'eventValue': undefined
         };
         //console.log(gaObject)
-        ga('send', 'event', gaObject);
+        dataLayer.push(gaObject);
     };
     this.setupValidation = function (paypalActions) {
         this.paypalActions = paypalActions;

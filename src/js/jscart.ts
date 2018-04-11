@@ -1,4 +1,4 @@
-declare var ga:any;
+declare var dataLayer:any;
 
 interface CartItemInput {
 	id: string,
@@ -413,29 +413,38 @@ function Cart(items: Array<CartItemInput>): void {
 
 	this.sendNanErrorEvent = function(variableName:string):void {
 		let gaObject:object = {
+		  'event': 'GAEvent',
 		  'eventCategory': 'jsCart: NaN Error',
-		  'eventAction': 'Update ' + variableName
+		  'eventAction': 'Update ' + variableName,
+		  'eventLabel': undefined,
+		  'eventValue': undefined
 		}
 		//console.log(gaObject)
-		ga('send', 'event', gaObject);
+		dataLayer.push(gaObject);
 	}
 
 	this.sendIsCartValidErrorEvent = function(variableName:string):void {
 		let gaObject:object = {
+		  'event': 'GAEvent',
 		  'eventCategory': 'jsCart: isCartValid Error',
-		  'eventAction': 'Unexpected validity checking ' + variableName + ' dependencies'
+		  'eventAction': 'Unexpected validity checking ' + variableName + ' dependencies',
+		  'eventLabel': undefined,
+		  'eventValue': undefined
 		}
 		//console.log(gaObject)
-		ga('send', 'event', gaObject);
+		dataLayer.push(gaObject);
 	}
 
 	this.sendBuyNowButtonOnClickEvent = function(variableName:string):void {
 		let gaObject:object = {
+		  'event': 'GAEvent',
 		  'eventCategory': 'jsCart: Buy Now onClick event',
-		  'eventAction': variableName + ' Buy Now button onClick'
+		  'eventAction': variableName + ' Buy Now button onClick',
+		  'eventLabel': undefined,
+		  'eventValue': undefined
 		}
 		//console.log(gaObject)
-		ga('send', 'event', gaObject);
+		dataLayer.push(gaObject);
 	}
 
 	this.setupValidation = function(paypalActions:object):void {
